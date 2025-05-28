@@ -31,6 +31,16 @@
           Before joining CUHK, I was advised by Prof. <a href="https://scholar.google.com/citations?user=JURtNb0AAAAJ&hl=en" target="_blank" rel="noopener noreferrer"> Xiang-Yang Li </a> and Prof. <a href="https://scholar.google.com/citations?user=83QxmA8AAAAJ&hl=en" target="_blank" rel="noopener noreferrer"> Lan Zhang </a> at USTC. 
           My research interest is building innovative networking systems for machine-learning model inference. </p>
 
+        <h2>🎉 News</h2>
+        <div class="news-card">
+          <ul class="news-list">
+            <li><span class="news-date">[May 2025]</span> Our paper "RemoteRAG: A Privacy-Preserving LLM Cloud RAG Service" has been accepted by ACL 2025!</li>
+            <li><span class="news-date">[May 2025]</span> Our paper "Argus: Multi-view egocentric human mesh reconstruction based on stripped-down wearable mmwave add-on" received the Best Paper Honorable Mention Award at SenSys 2025!</li>
+            <li><span class="news-date">[Mar 2025]</span> Our paper "SCX: Stateless KV-Cache Encoding for Cloud-Scale Confidential Transformer Serving" has been accepted by SIGCOMM 2025!</li>
+            <li><span class="news-date">[Dec 2024]</span> Received the CCF Doctoral Dissertation Award (10 Nationwide)!</li>
+          </ul>
+        </div>
+
         <h2>Selected Publications </h2>
 
         <h3>🔥 Large Language Models (LLMs)</h3>
@@ -137,7 +147,7 @@
   series = {MobiCom '22}
 }</div>
         </p>
-        <hr/>
+        <!-- <hr/> -->
       </div>
 
       <h3>⚡️ Model Scheduling</h3>
@@ -179,7 +189,7 @@ doi={10.1109/TPAMI.2023.3283780}}</div>
           | <a href="https://github.com/yuanmu97/MLink" target="_blank" rel="noopener noreferrer"> Code </a>
           | <a href="https://www.bilibili.com/video/BV11S4y1m7dG/" target="_blank" rel="noopener noreferrer"> Bilibili </a>
           | <a href="#!" onclick="myFunction('cite1')"> Cite </a>
-<div id="cite1" style="display: none;border-style: solid;border-width: 1px;padding: 5px;white-space: pre-wrap;">Mu Yuan, Lan Zhang, and Xiang-Yang Li. 2022. “MLink: Linking Black-Box Models for Collaborative Multi-Model Inference”. Proceedings of the AAAI Conference on Artificial Intelligence 36 (9):9475-83. https://doi.org/10.1609/aaai.v36i9.21180.
+<div id="cite1" style="display: none;border-style: solid;border-width: 1px;padding: 5px;white-space: pre-wrap;">Mu Yuan, Lan Zhang, and Xiang-Yang Li. 2022. "MLink: Linking Black-Box Models for Collaborative Multi-Model Inference". Proceedings of the AAAI Conference on Artificial Intelligence 36 (9):9475-83. https://doi.org/10.1609/aaai.v36i9.21180.
 
 @article{yuan-mlink, 
   title={MLink: Linking Black-Box Models for Collaborative Multi-Model Inference}, 
@@ -254,7 +264,7 @@ doi={10.1109/TPAMI.2023.3283780}}</div>
       <div class="paper-card">
         <p>
           异构协同模型推理 (Heterogeneous Collaborative Model Inference)<br>
-          <u>袁牧 (Mu Yuan)</u><br>
+          <u>袁牧 (Mu Yuan)</u> <br>
           🏆 CCF 全国优博 (CCF Doctoral Dissertation Award)<br>
           CCF 物联网专委优博 (CCF TCIoT Doctoral Dissertation Award)<br>
           中国科学技术大学校优博 (USTC Doctoral Dissertation Award)<br>
@@ -293,10 +303,10 @@ doi={10.1109/TPAMI.2023.3283780}}</div>
         </p>
         <hr/> -->
 
-        <h2> Services </h2>
+        <h2>🌐 Services </h2>
         <p>
         Reviewer of ACM IMWUT, IEEE INFOCOM, IEEE TMC, IEEE IoTJ, AAAI, NeurIPS<br>
-        Co-chair of <a href="https://anai.cuhkaiot.com/2025/index.html">ANAI Workshop 2025</a> (co-located with ACM MobiCom 2025)<br>
+        Co-chair of <a href="https://anai.cuhkaiot.com/2025/index.html" target="_blank" rel="noopener noreferrer">ANAI Workshop 2025</a> (co-located with ACM MobiCom 2025)<br>
         </p>
         <hr/>
         
@@ -318,6 +328,7 @@ doi={10.1109/TPAMI.2023.3283780}}</div>
       </section>
       <footer>
         <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist" target="_blank" rel="noopener noreferrer">orderedlist</a></small></p>
+        <p><small>Last updated: <span id="last-updated"></span></small></p>
       </footer>
     </div>
     <script src="javascripts/scale.fix.js"></script>
@@ -330,6 +341,17 @@ doi={10.1109/TPAMI.2023.3283780}}</div>
           x.style.display = "none";
         }
       }
+
+      // Add last updated date
+      document.addEventListener('DOMContentLoaded', function() {
+        var lastUpdated = document.getElementById('last-updated');
+        var date = new Date(document.lastModified);
+        lastUpdated.textContent = date.toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        });
+      });
     </script>
   </body>
 </html>

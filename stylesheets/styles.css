@@ -176,11 +176,24 @@ section {
 }
 
 .paper-card {
-  padding: 10px 15px;
-  margin-bottom: 15px;
+  padding: 8px 12px;
+  margin-bottom: 10px;
   border-left: 4px solid #007acc;
   background-color: #f9f9f9;
   border-radius: 6px;
+  position: relative;
+  z-index: 1;
+}
+
+.paper-card a {
+  position: relative;
+  z-index: 2;
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.paper-card a:hover {
+  text-decoration: underline;
 }
 
 small {
@@ -275,4 +288,35 @@ footer {
     font-size:12pt;
     color:#444;
   }
+}
+
+.news-card {
+  padding: 15px 20px;
+  margin-bottom: 25px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border-left: 4px solid #28a745;
+}
+
+.news-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.news-list li {
+  margin-bottom: 12px;
+  line-height: 1.5;
+  position: relative;
+  padding-left: 5px;
+}
+
+.news-list li:last-child {
+  margin-bottom: 0;
+}
+
+.news-date {
+  color: #28a745;
+  font-weight: 500;
+  margin-right: 8px;
 }
