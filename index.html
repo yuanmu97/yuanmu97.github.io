@@ -27,28 +27,38 @@
         <a href="Complete CV with a full list of publications.pdf" target="_blank" rel="noopener noreferrer">Complete CV</a>
       </header>
 
-      <section>    
-        <p> I am fortunate to work with Prof. <a href="https://scholar.google.com.hk/citations?user=kI5JKs8AAAAJ&hl=en" target="_blank" rel="noopener noreferrer"> Guoliang Xing</a> at CUHK. 
-          Before joining CUHK, I was advised by Prof. <a href="https://scholar.google.com/citations?user=JURtNb0AAAAJ&hl=en" target="_blank" rel="noopener noreferrer"> Xiang-Yang Li </a> and Prof. <a href="https://scholar.google.com/citations?user=83QxmA8AAAAJ&hl=en" target="_blank" rel="noopener noreferrer"> Lan Zhang </a> at USTC. 
-          My research interest is designing theory-backed algorithms and building innovative systems for AI workloads. </p>
+      <section>
+        <!-- Navigation Bar -->
+        <nav class="section-nav" id="sectionNav">
+          <a href="#about" class="nav-link">About</a>
+          <a href="#publications" class="nav-link">Publications</a>
+          <a href="#talks" class="nav-link">Talks</a>
+          <a href="#services" class="nav-link">Services</a>
+          <a href="#awards" class="nav-link">Funds and Awards</a>
+        </nav>
+    
+        <div id="about" class="content-section active">
+          <p> I am fortunate to work with Prof. <a href="https://scholar.google.com.hk/citations?user=kI5JKs8AAAAJ&hl=en" target="_blank" rel="noopener noreferrer"> Guoliang Xing</a> at CUHK. 
+            Before joining CUHK, I was advised by Prof. <a href="https://scholar.google.com/citations?user=JURtNb0AAAAJ&hl=en" target="_blank" rel="noopener noreferrer"> Xiang-Yang Li </a> and Prof. <a href="https://scholar.google.com/citations?user=83QxmA8AAAAJ&hl=en" target="_blank" rel="noopener noreferrer"> Lan Zhang </a> at USTC. 
+            My research interest is designing theory-backed algorithms and building innovative systems for AI workloads. </p>
 
-        <h2>📌 News</h2>
-        <div class="news-card">
-          <ul class="news-list">
-            <li><span class="news-date">[Sep 2025]</span> The ANAI Workshop @ MobiCom 2025 has released the <a href="https://anai.cuhkaiot.com/2025/program.html#main" target="_blank" rel="noopener noreferrer">accepted papers</a>! Congratulations to all authors!</li>
-            <li><span class="news-date">[Sep 2025]</span> Our paper "COACH: Adaptive Robust Human-Robot Collaboration for Efficient Smart Manufacturing" has been accepted by ACM SenSys 2026! Congratulations to Hui Wang!</li>
-            <li><span class="news-date">[Aug 2025]</span> Our paper "STIP: Three-Party Privacy-Preserving and Lossless Inference for Large Transformers in Production" has been accepted by NDSS 2026!</li>
-            <li><span class="news-date">[Jun 2025]</span> Our paper "Myo-Trainer" has been accepted by MobiCom 2025!</li>
-            <!-- <li><span class="news-date">[May 2025]</span> Our paper "RemoteRAG: A Privacy-Preserving LLM Cloud RAG Service" has been accepted by ACL 2025!</li> -->
-            <li><span class="news-date">[May 2025]</span> Our paper "Argus: Multi-view egocentric human mesh reconstruction based on stripped-down wearable mmwave add-on" received the Best Paper Honorable Mention Award at SenSys 2025!</li>
-            <!-- <li><span class="news-date">[Mar 2025]</span> Our paper "SCX: Stateless KV-Cache Encoding for Cloud-Scale Confidential Transformer Serving" has been accepted by SIGCOMM 2025!</li> -->
-            <!-- <li><span class="news-date">[Dec 2024]</span> Received the CCF Doctoral Dissertation Award (10 Nationwide)!</li> -->
-          </ul>
+          <h2>📌 News</h2>
+          <div class="news-card">
+            <ul class="news-list">
+              <li><span class="news-date">[Sep 2025]</span> The ANAI Workshop @ MobiCom 2025 has released the <a href="https://anai.cuhkaiot.com/2025/program.html#main" target="_blank" rel="noopener noreferrer">accepted papers</a>! Congratulations to all authors!</li>
+              <li><span class="news-date">[Sep 2025]</span> Our paper "COACH: Adaptive Robust Human-Robot Collaboration for Efficient Smart Manufacturing" has been accepted by ACM SenSys 2026! Congratulations to Hui Wang!</li>
+              <li><span class="news-date">[Aug 2025]</span> Our paper "STIP: Three-Party Privacy-Preserving and Lossless Inference for Large Transformers in Production" has been accepted by NDSS 2026!</li>
+              <li><span class="news-date">[Jun 2025]</span> Our paper "Myo-Trainer" has been accepted by MobiCom 2025!</li>
+              <li><span class="news-date">[May 2025]</span> Our paper "Argus: Multi-view egocentric human mesh reconstruction based on stripped-down wearable mmwave add-on" received the Best Paper Honorable Mention Award at SenSys 2025!</li>
+            </ul>
+          </div>
         </div>
 
-        <h2>Selected Publications </h2>
-
-        <h3>Large Language Models (LLMs)</h3>
+        <div id="publications" class="content-section">
+        <h3 class="pub-category" onclick="toggleCategory('llm')">
+        <span class="toggle-icon" id="toggle-llm">▼</span> Large Language Models (LLMs)
+      </h3>
+      <div id="category-llm" class="category-content">
         <div class="paper-card">
           <p>
             STIP: Three-Party Privacy-Preserving and Lossless Inference for Large Transformers in Production<br>
@@ -81,21 +91,6 @@
             <a href="https://aclanthology.org/2025.findings-acl.197/" target="_blank" rel="noopener noreferrer">RemoteRAG: A Privacy-Preserving LLM Cloud RAG Service</a><br>
             Yihang Cheng, Lan Zhang, Junyang Wang, <u>Mu Yuan</u>, Yunhao Yao<br>
             <i>ACL 2025</i><br>
-            <a href="#!" onclick="myFunction('cite_remoterag')"> Cite </a>
-<div id="cite_remoterag" style="display: none;border-style: solid;border-width: 1px;padding: 5px;white-space: pre-wrap;">
-@inproceedings{cheng-2025-remoterag,
-    title = "{R}emote{RAG}: A Privacy-Preserving {LLM} Cloud {RAG} Service",
-    author = "Cheng, Yihang  and Zhang, Lan  and Wang, Junyang  and Yuan, Mu  and Yao, Yunhao",
-    booktitle = "Findings of the Association for Computational Linguistics: ACL 2025",
-    month = jul,
-    year = "2025",
-    address = "Vienna, Austria",
-    publisher = "Association for Computational Linguistics",
-    url = "https://aclanthology.org/2025.findings-acl.197/",
-    pages = "3820--3837",
-    ISBN = "979-8-89176-256-5",
-}
-</div>
           </p>
           <hr/>
 
@@ -107,18 +102,17 @@
           </p>
           <hr/>
 
-          <!-- <p>
-            <a href="https://dl.acm.org/doi/abs/10.1145/3666025.3699397" target="_blank" rel="noopener noreferrer">Myotrainer: Muscle-Aware Motion Analysis and Feedback System for In-Home Resistance Training</a><br>
-            Yuting He, Xinyan Wang, <u>Mu Yuan</u>, Di Duan, Doris SF Yu, Guoliang Xing, Hongkai Chen<br>
-            <i>SenSys 2024</i> (🏅 Best Demo Runner-Up Award)<br>
-          </p> -->
         </div>
+      </div>
       
-      <h3>Mobile/Edge Intelligence</h3>
+      <h3 class="pub-category" onclick="toggleCategory('mobile')">
+        <span class="toggle-icon" id="toggle-mobile">▼</span> Mobile/Edge Intelligence
+      </h3>
+      <div id="category-mobile" class="category-content">
       <div class="paper-card">
 
         <p>
-          <a href="#!" onclick="myFunction('cite_grape')">Grape: Efficient Spatiotemporal Prediction Services with Stale Sensing Streams</a><br>
+          Grape: Efficient Spatiotemporal Prediction Services with Stale Sensing Streams<br>
           Liekang Zeng, Yunchao Liu, Shengyuan Ye, <u>Mu Yuan</u>, Di Duan, Xu Chen, Guoliang Xing<br>
           <i>IEEE Real-Time Systems Symposium (RTSS) 2025</i><br>
         </p>
@@ -140,34 +134,8 @@
           <a href="preprint/packetgame_sigcomm23.pdf"> PDF </a>
           | <a href="slides/packetgame_sigcomm23.pdf"> Slides </a>
           | <a href="https://github.com/yuanmu97/PacketGame" target="_blank" rel="noopener noreferrer"> Code </a>
-          | <a href="#!" onclick="myFunction('cite_packetgame')"> Cite </a>
-<div id="cite_packetgame" style="display: none;border-style: solid;border-width: 1px;padding: 5px;white-space: pre-wrap;">Mu Yuan, Lan Zhang, Xuanke You, and Xiang-Yang Li. 2023. PacketGame: Multi-Stream Packet Gating for Concurrent Video Inference at Scale. In Proceedings of the ACM SIGCOMM 2023 Conference (ACM SIGCOMM '23). Association for Computing Machinery, New York, NY, USA, 724–737. https://doi.org/10.1145/3603269.3604825
-
-@inproceedings{yuan-packetgame,
-  author = {Yuan, Mu and Zhang, Lan and You, Xuanke and Li, Xiang-Yang},
-  title = {PacketGame: Multi-Stream Packet Gating for Concurrent Video Inference at Scale},
-  year = {2023},
-  isbn = {9798400702365},
-  publisher = {Association for Computing Machinery},
-  address = {New York, NY, USA},
-  url = {https://doi.org/10.1145/3603269.3604825},
-  doi = {10.1145/3603269.3604825},
-  booktitle = {Proceedings of the ACM SIGCOMM 2023 Conference},
-  pages = {724–737},
-  numpages = {14},
-  location = {New York, NY, USA},
-  series = {ACM SIGCOMM '23}
-  }</div>
         </p>
         <hr/>
-
-        <!-- <p>
-          <a href="https://ieeexplore.ieee.org/abstract/document/10124356" target="_blank" rel="noopener noreferrer">InFi: End-to-End Learning to Filter Input for Resource-Efficiency in Mobile-Centric Inference</a><br>
-          <u>Mu Yuan</u>, Lan Zhang, Fengxiang He, Xueting Tong, Miao-Hui Song, Zhengyuan Xu, Xiang-Yang Li<br>
-          <i>IEEE TMC 2023</i><br>
-          <a href="https://arxiv.org/pdf/2209.13873.pdf"> PDF </a>
-        </p>
-        <hr/> -->
 
         <p>
           <a href="https://dl.acm.org/doi/10.1145/3495243.3517016" target="_blank" rel="noopener noreferrer">InFi: End-to-end Learnable Input Filter for Resource-efficient Mobile-centric Inference</a><br>
@@ -177,47 +145,21 @@
           | <a href="slides/infi_mobicom22_pdf.pdf"> Slides </a>
           | <a href="https://github.com/yuanmu97/infi" target="_blank" rel="noopener noreferrer"> Code </a>
           | <a href="https://www.bilibili.com/video/BV1vV4y157n1/" target="_blank" rel="noopener noreferrer"> Bilibili </a>
-          | <a href="#!" onclick="myFunction('cite2')"> Cite </a>
-<div id="cite2" style="display: none;border-style: solid;border-width: 1px;padding: 5px;white-space: pre-wrap;">Mu Yuan, Lan Zhang, Fengxiang He, Xueting Tong, and Xiang-Yang Li. 2022. InFi: end-to-end learnable input filter for resource-efficient mobile-centric inference. In Proceedings of the 28th Annual International Conference on Mobile Computing And Networking (MobiCom '22). Association for Computing Machinery, New York, NY, USA, 228–241. https://doi.org/10.1145/3495243.3517016.
-
-@inproceedings{yuan-infi,
-  author = {Yuan, Mu and Zhang, Lan and He, Fengxiang and Tong, Xueting and Li, Xiang-Yang},
-  title = {InFi: End-to-End Learnable Input Filter for Resource-Efficient Mobile-Centric Inference},
-  year = {2022},
-  isbn = {9781450391818},
-  publisher = {Association for Computing Machinery},
-  address = {New York, NY, USA},
-  url = {https://doi.org/10.1145/3495243.3517016},
-  doi = {10.1145/3495243.3517016},
-  booktitle = {Proceedings of the 28th Annual International Conference on Mobile Computing And Networking},
-  pages = {228–241},
-  numpages = {14},
-  location = {Sydney, NSW, Australia},
-  series = {MobiCom '22}
-}</div>
         </p>
         <!-- <hr/> -->
       </div>
+      </div>
 
-      <h3>Model Scheduling</h3>
+      <h3 class="pub-category" onclick="toggleCategory('scheduling')">
+        <span class="toggle-icon" id="toggle-scheduling">▼</span> Multi-Model Scheduling
+      </h3>
+      <div id="category-scheduling" class="category-content">
       <div class="paper-card">
         <p>
           <a href="https://ieeexplore.ieee.org/document/10145800" target="_blank" rel="noopener noreferrer">MLink: Linking Black-Box Models from Multiple Domains for Collaborative Inference</a><br>
           <u>Mu Yuan</u>, Lan Zhang, Zimu Zheng, Yi-Nan Zhang, Xiang-Yang Li<br>
           <i>IEEE TPAMI 2023</i><br>
           <a href="https://arxiv.org/pdf/2209.13883.pdf"> PDF </a>
-          | <a href="#!" onclick="myFunction('cite_mlink_tpami')"> Cite </a>
-<div id="cite_mlink_tpami" style="display: none;border-style: solid;border-width: 1px;padding: 5px;white-space: pre-wrap;">M. Yuan, L. Zhang, Z. Zheng, Y. -N. Zhang and X. -Y. Li, "MLink: Linking Black-Box Models From Multiple Domains for Collaborative Inference," in IEEE Transactions on Pattern Analysis and Machine Intelligence, vol. 45, no. 10, pp. 12085-12097, Oct. 2023, doi: 10.1109/TPAMI.2023.3283780.
-
-@ARTICLE{yuan-mlink-tpami,
-author={Yuan, Mu and Zhang, Lan and Zheng, Zimu and Zhang, Yi-Nan and Li, Xiang-Yang},
-journal={IEEE Transactions on Pattern Analysis and Machine Intelligence}, 
-title={MLink: Linking Black-Box Models From Multiple Domains for Collaborative Inference}, 
-year={2023},
-volume={45},
-number={10},
-pages={12085-12097},
-doi={10.1109/TPAMI.2023.3283780}}</div>
         </p>
         <hr/>
 
@@ -237,21 +179,6 @@ doi={10.1109/TPAMI.2023.3283780}}</div>
           | <a href="slides/mlink_aaai22_intro_pdf.pdf"> Slides (1min version)</a>
           | <a href="https://github.com/yuanmu97/MLink" target="_blank" rel="noopener noreferrer"> Code </a>
           | <a href="https://www.bilibili.com/video/BV11S4y1m7dG/" target="_blank" rel="noopener noreferrer"> Bilibili </a>
-          | <a href="#!" onclick="myFunction('cite1')"> Cite </a>
-<div id="cite1" style="display: none;border-style: solid;border-width: 1px;padding: 5px;white-space: pre-wrap;">Mu Yuan, Lan Zhang, and Xiang-Yang Li. 2022. "MLink: Linking Black-Box Models for Collaborative Multi-Model Inference". Proceedings of the AAAI Conference on Artificial Intelligence 36 (9):9475-83. https://doi.org/10.1609/aaai.v36i9.21180.
-
-@article{yuan-mlink, 
-  title={MLink: Linking Black-Box Models for Collaborative Multi-Model Inference}, 
-  volume={36}, 
-  url={https://ojs.aaai.org/index.php/AAAI/article/view/21180}, 
-  DOI={10.1609/aaai.v36i9.21180},  
-  number={9}, 
-  journal={Proceedings of the AAAI Conference on Artificial Intelligence}, 
-  author={Yuan, Mu and Zhang, Lan and Li, Xiang-Yang}, 
-  year={2022}, 
-  month={Jun.}, 
-  pages={9475-9483} 
-}</div>
         </p>
         <hr/>
 
@@ -260,27 +187,6 @@ doi={10.1109/TPAMI.2023.3283780}}</div>
           <u>Mu Yuan</u>, Lan Zhang, Xiang-Yang Li, Lin-Zhuo Yang, Hui Xiong<br>
           <i>ACM TKDD 2022</i><br>
           <a href="preprint/AdaMS_TKDD2022_preprint.pdf"> PDF </a>
-          | <a href="#!" onclick="myFunction('cite3')"> Cite </a>
-<div id="cite3" style="display: none;border-style: solid;border-width: 1px;padding: 5px;white-space: pre-wrap;">Mu Yuan, Lan Zhang, Xiang-Yang Li, Lin-Zhuo Yang, and Hui Xiong. 2022. Adaptive Model Scheduling for Resource-efficient Data Labeling. ACM Trans. Knowl. Discov. Data 16, 4, Article 71 (August 2022), 22 pages. https://doi.org/10.1145/3494559.
-
-@article{yuan-adms-tkdd,
-  author = {Yuan, Mu and Zhang, Lan and Li, Xiang-Yang and Yang, Lin-Zhuo and Xiong, Hui},
-  title = {Adaptive Model Scheduling for Resource-Efficient Data Labeling},
-  year = {2022},
-  issue_date = {August 2022},
-  publisher = {Association for Computing Machinery},
-  address = {New York, NY, USA},
-  volume = {16},
-  number = {4},
-  issn = {1556-4681},
-  url = {https://doi.org/10.1145/3494559},
-  doi = {10.1145/3494559},
-  journal = {ACM Trans. Knowl. Discov. Data},
-  month = {jan},
-  articleno = {71},
-  numpages = {22},
-  keywords = {Model scheduling, reinforcement learning, data labeling}
-  }</div>
         </p>
         <hr/>
 
@@ -292,24 +198,15 @@ doi={10.1109/TPAMI.2023.3283780}}</div>
           | <a href="https://lake.videoken.com/icde2020/search/670%20Comprehensive%20and%20Efficient%20Data%20Labeling%20via%20Adaptive%20Model%20Scheduling/video/O4o87ozBxIk" target="_blank" rel="noopener noreferrer">Official Video</a>
           | <a href="https://www.bilibili.com/video/bv1JT4y1u7ya" target="_blank" rel="noopener noreferrer">Bilibili</a> 
           | <a href="slides/670_ICDE_Yuan.pdf"> Slides </a>
-          | <a href="#!" onclick="myFunction('cite6')"> Cite </a>
-<div id="cite6" style="display: none;border-style: solid;border-width: 1px;padding: 5px;white-space: pre-wrap;">Mu Yuan, Lan Zhang, Xiang-Yang Li and Hui Xiong, "Comprehensive and Efficient Data Labeling via Adaptive Model Scheduling," 2020 IEEE 36th International Conference on Data Engineering (ICDE), Dallas, TX, USA, 2020, pp. 1858-1861, doi: 10.1109/ICDE48307.2020.00188.
-
-@INPROCEEDINGS{yuan-adms-icde,
-  author={Yuan, Mu and Zhang, Lan and Li, Xiang-Yang and Xiong, Hui},
-  booktitle={2020 IEEE 36th International Conference on Data Engineering (ICDE)}, 
-  title={Comprehensive and Efficient Data Labeling via Adaptive Model Scheduling}, 
-  year={2020},
-  volume={},
-  number={},
-  pages={1858-1861},
-  doi={10.1109/ICDE48307.2020.00188}
-}</div>
         </p>
         <!-- <hr/> -->
       </div>
+      </div>
       
-      <h3>🎓 Doctoral Dissertation</h3>
+      <h3 class="pub-category" onclick="toggleCategory('dissertation')">
+        <span class="toggle-icon" id="toggle-dissertation">▼</span> 🎓 Doctoral Dissertation
+      </h3>
+      <div id="category-dissertation" class="category-content">
       <div class="paper-card">
         <p>
           异构协同模型推理 (Heterogeneous Collaborative Model Inference)<br>
@@ -320,73 +217,44 @@ doi={10.1109/TPAMI.2023.3283780}}</div>
           <a href="preprint/Dissertation.pdf"> PDF </a>
         </p>
       </div>
-        
-        <!-- <hr/> -->
+      </div>
+        </div>
 
-        <!-- <p>
-          <a href="https://dl.acm.org/doi/abs/10.1145/3543507.3583533" target="_blank" rel="noopener noreferrer">CoTel: Ontology-Neural Co-Enhanced Text Labeling</a><br>
-          Miao-Hui Song, Lan Zhang, <u>Mu Yuan</u>, Zichong Li, Qi Song, Yijun Liu, Guidong Zheng<br>
-          <i>ACM WWW 2023</i><br>
-        </p>
-        <hr/> -->
+        <div id="talks" class="content-section">
+          <p>
+          <strong style="color: #0066cc;">[ACM 中国图灵大会，ACM TURC 2025]</strong><br>
+          <strong>[2025.10.11]</strong> 深圳 - <a href="https://www.acmturc.com/2025/cn/attach/new_star_forum/" target="_blank" rel="noopener noreferrer">端云协同：驱动大模型高效与安全服务的系统研究</a><br>
+          <br> 
+          <strong style="color: #0066cc;">[The 3rd International Conference on the Frontiers of Robotics and Software Engineering (FRSE2025)]</strong><br>
+          <strong>[2025.8.9]</strong> Zhangjiajie - Enhancing AI System Performance and Security via Device-Cloud Collaboration<br>
+          <br>
+          <strong style="color: #0066cc;">[第十五届中国计算机学会优博论坛]</strong><br>
+          <strong>[2025.8.4]</strong> 乌镇 - 端云协同智能面向高效、安全、个性化的模型服务<br>
+          <br>
+          <strong style="color: #0066cc;">[中国科学技术大学 专题报告]</strong><br>
+          <strong>[2025.5.6]</strong> 合肥 - <a href="https://iai.ustc.edu.cn/iai/r233/20250506/7448.html" target="_blank" rel="noopener noreferrer">端云协同范式赋能大模型高效机密推理</a><br>
+          <br>
+          <strong style="color: #0066cc;">[港中文大模型可靠性技术沙龙]</strong><br>
+          <strong>[2025.2.21]</strong> 香港 - 模型推理原生的智能物联网系统 Model Inference-Native AIoT Systems<br>
+          <br>
+          <strong style="color: #0066cc;">[2024年华为青年学者交流会 数通专场]</strong><br>
+          <strong>[2024.11.30]</strong> 苏州 - 异构协同模型推理<br>
+          <br>
+          <strong style="color: #0066cc;">[第十八届中国物联网学术会议 CWSN 2024]</strong><br>
+          <strong>[2024.9.21]</strong> 太原 - <a href="https://ccf.org.cn/CWSN2024/general_1032" target="_blank" rel="noopener noreferrer">优秀博士论文报告</a><br>
+          </p>
+        </div>
 
-        <!-- <p>
-          <a href="https://ieeexplore.ieee.org/document/9212956" target="_blank" rel="noopener noreferrer">High-quality Activity-Level Video Advertising</a><br>
-          <u>Mu Yuan</u>, Lan Zhang, Zhengtao Wu, Daren Zheng<br>
-          <i>IEEE/ACM IWQoS 2020 (Video Presentation Award)</i> <br>
-          <a href="preprint/ActVA_IWQoS20_preprintt.pdf"> PDF </a>
-          | <a href="https://github.com/yuanmu97/ActVA" target="_blank" rel="noopener noreferrer"> Code </a>
-          | <a href="https://www.bilibili.com/video/BV1Mi4y1x7aJ/">Bilibili</a>
-          | <a href="slides/IWQoS2020_paper56.pdf"> Slides </a>
-          | <a href="#!" onclick="myFunction('cite5')"> Cite </a>
-<div id="cite5" style="display: none;border-style: solid;border-width: 1px;padding: 5px;white-space: pre-wrap;">Mu Yuan, Lan Zhang, Zhengtao Wu and Daren Zheng, "High-quality Activity-Level Video Advertising," 2020 IEEE/ACM 28th International Symposium on Quality of Service (IWQoS), Hang Zhou, China, 2020, pp. 1-10, doi: 10.1109/IWQoS49365.2020.9212956.
-
-@INPROCEEDINGS{yuan-actva,
-  author={Yuan, Mu and Zhang, Lan and Wu, Zhengtao and Zheng, Daren},
-  booktitle={2020 IEEE/ACM 28th International Symposium on Quality of Service (IWQoS)}, 
-  title={High-quality Activity-Level Video Advertising}, 
-  year={2020},
-  pages={1-10},
-  doi={10.1109/IWQoS49365.2020.9212956}
-}</div>
-        </p>
-        <hr/> -->
-
-        <h2>Invited Talks</h2>
-        <p>
-        <strong style="color: #0066cc;">[ACM 中国图灵大会，ACM TURC 2025]</strong><br>
-        <strong>[2025.10.11]</strong> <em>深圳，广东</em> - 端云协同：驱动大模型高效与安全服务的系统研究<br>
-        <br>
-        <strong style="color: #0066cc;">[The 3rd International Conference on the Frontiers of Robotics and Software Engineering (FRSE2025)]</strong><br>
-        <strong>[2025.8.9]</strong> <em>张家界，湖南</em> - Enhancing AI System Performance and Security via Device-Cloud Collaboration<br>
-        <br>
-        <strong style="color: #0066cc;">[第十五届中国计算机学会优博论坛]</strong><br>
-        <strong>[2025.8.4]</strong> <em>乌镇，浙江</em> - 端云协同智能面向高效、安全、个性化的模型服务<br>
-        <br>
-        <strong style="color: #0066cc;">[中国科学技术大学 邀请报告]</strong><br>
-        <strong>[2025.5.6]</strong> <em>合肥，安徽</em> - 端云协同范式赋能大模型高效机密推理<br>
-        <br>
-        <strong style="color: #0066cc;">[港中文大模型可靠性技术沙龙]</strong><br>
-        <strong>[2025.2.21]</strong> <em>香港</em> - 模型推理原生的智能物联网系统 Model Inference-Native AIoT Systems<br>
-        <br>
-        <strong style="color: #0066cc;">[2024年华为青年学者交流会（数通专场）]</strong><br>
-        <strong>[2024.11.30]</strong> <em>苏州，江苏</em> - 异构协同模型推理<br>
-        <br>
-        <strong style="color: #0066cc;">[第十八届中国物联网学术会议 CWSN 2024]</strong><br>
-        <strong>[2024.9.21]</strong> <em>太原，山西</em> - 优秀博士论文报告<br>
-        </p>
-        <hr/>
-
-        <h2>Services </h2>
-        <p>
+        <div id="services" class="content-section">
+          <p>
         Reviewing Editor of Springer Nature (2025 - present)<br>
         Co-chair of <a href="https://anai.cuhkaiot.com/2025/index.html" target="_blank" rel="noopener noreferrer">ANAI Workshop 2025</a> (co-located with ACM MobiCom 2025)<br>
         Reviewer of ACM IMWUT, IEEE INFOCOM, IEEE TMC, IEEE IoTJ, AAAI, NeurIPS<br>
-        </p>
-        <hr/>
+          </p>
+        </div>
         
-        <h2> Funds and Awards </h2>
-        <p>
+        <div id="awards" class="content-section">
+          <p>
         2024-2025 National Natural Science Foundation of China, Grant No.623B2093, RMB 300,000 <br>
         2024 CCF Doctoral Dissertation Award (10 Nationwide) [<a href="https://www.ccf.org.cn/Awards/Awards/2024-12-11/835343.shtml" target="_blank" rel="noopener noreferrer">Link</a>]<br>
         2024 CCF TCIoT Doctoral Dissertation Award (4 Nationwide) [<a href="https://mp.weixin.qq.com/s/Zxj5Hu8n5C0CygF0WKqr8A" target="_blank" rel="noopener noreferrer">Link</a>]<br>
@@ -398,7 +266,8 @@ doi={10.1109/TPAMI.2023.3283780}}</div>
         <!-- 2018 Yuan-Qing Scholarship [<a href="https://cs.ustc.edu.cn/22485/listm.htm" target="_blank" rel="noopener noreferrer">Link</a>]<br> -->
         2018 SenseTime Scholarship (22 Nationwide) [<a href="https://mp.weixin.qq.com/s/mjC2uwuLEtJJRPM32l9ssQ" target="_blank" rel="noopener noreferrer">Link</a>]<br>
         2018 Grand Price (1 out of 1530 teams) of the 4th National University Cloud Computing Contest [<a href="https://mp.weixin.qq.com/s/N2lbJlI5NC_9tsQ8Wj82cQ" target="_blank" rel="noopener noreferrer">Link</a>]
-        </p>
+          </p>
+        </div>
 
       </section>
       <footer>
@@ -408,15 +277,6 @@ doi={10.1109/TPAMI.2023.3283780}}</div>
     </div>
     <script src="javascripts/scale.fix.js"></script>
     <script>
-      function myFunction(id) {
-        var x = document.getElementById(id);
-        if (x.style.display === "none") {
-          x.style.display = "block";
-        } else {
-          x.style.display = "none";
-        }
-      }
-
       // Add last updated date
       document.addEventListener('DOMContentLoaded', function() {
         var lastUpdated = document.getElementById('last-updated');
@@ -426,7 +286,89 @@ doi={10.1109/TPAMI.2023.3283780}}</div>
           month: 'long',
           day: 'numeric'
         });
+        
+        // Initialize navigation functionality
+        initNavigation();
+        initCategoryToggle();
       });
+
+      // Navigation tab switching
+      function initNavigation() {
+        const navLinks = document.querySelectorAll('.nav-link');
+        const contentSections = document.querySelectorAll('.content-section');
+
+        // Tab switching for navigation links
+        navLinks.forEach(link => {
+          link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href').substring(1);
+            
+            // Remove active class from all links
+            navLinks.forEach(l => l.classList.remove('active'));
+            // Add active class to clicked link
+            this.classList.add('active');
+            
+            // Hide all content sections
+            contentSections.forEach(section => {
+              section.classList.remove('active');
+            });
+            
+            // Show target content section
+            const targetSection = document.getElementById(targetId);
+            if (targetSection) {
+              targetSection.classList.add('active');
+            }
+            
+            // Update URL
+            history.pushState(null, '', '#' + targetId);
+            
+            // Scroll to top of section area
+            const sectionNav = document.getElementById('sectionNav');
+            if (sectionNav) {
+              sectionNav.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          });
+        });
+
+        // Handle initial hash in URL
+        const hash = window.location.hash.substring(1);
+        if (hash) {
+          const targetLink = document.querySelector(`.nav-link[href="#${hash}"]`);
+          if (targetLink) {
+            targetLink.click();
+          }
+        } else {
+          // Set first nav item as active by default
+          navLinks[0].classList.add('active');
+        }
+      }
+
+      // Category toggle functionality
+      function toggleCategory(categoryId) {
+        const content = document.getElementById('category-' + categoryId);
+        const toggleIcon = document.getElementById('toggle-' + categoryId);
+        
+        if (content.classList.contains('collapsed')) {
+          content.classList.remove('collapsed');
+          content.classList.add('expanded');
+          toggleIcon.textContent = '▼';
+        } else {
+          content.classList.remove('expanded');
+          content.classList.add('collapsed');
+          toggleIcon.textContent = '▶';
+        }
+      }
+
+      function initCategoryToggle() {
+        // Initialize all categories as expanded by default
+        const categories = ['llm', 'mobile', 'scheduling', 'dissertation'];
+        categories.forEach(cat => {
+          const content = document.getElementById('category-' + cat);
+          if (content) {
+            content.classList.add('expanded');
+          }
+        });
+      }
     </script>
   </body>
 </html>

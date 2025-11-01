@@ -320,3 +320,120 @@ footer {
   font-weight: 500;
   margin-right: 8px;
 }
+
+/* Section Navigation Bar */
+.section-nav {
+  position: sticky;
+  top: 20px;
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 2px solid #f0f0f0;
+  padding: 15px 20px;
+  margin-bottom: 30px;
+  z-index: 100;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav-link {
+  color: #595959;
+  text-decoration: none;
+  padding: 8px 20px;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -17px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 3px;
+  background-color: #39c;
+  border-radius: 2px 2px 0 0;
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #39c;
+}
+
+.nav-link.active {
+  color: #39c;
+}
+
+.nav-link.active::after {
+  width: 80%;
+}
+
+/* Publication Category Toggle */
+.pub-category {
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 0;
+  margin-top: 20px;
+  margin-bottom: 15px;
+  transition: color 0.2s ease;
+}
+
+.pub-category:hover {
+  color: #39c;
+}
+
+.toggle-icon {
+  font-size: 12px;
+  transition: transform 0.3s ease;
+  display: inline-block;
+  min-width: 14px;
+  text-align: center;
+}
+
+.category-content {
+  overflow: hidden;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+}
+
+.category-content.collapsed {
+  max-height: 0;
+  opacity: 0;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.category-content.expanded {
+  max-height: 5000px;
+  opacity: 1;
+}
+
+/* Content Section Tabs */
+.content-section {
+  display: none;
+  animation: fadeIn 0.3s ease;
+}
+
+.content-section.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
