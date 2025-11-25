@@ -45,14 +45,16 @@
           <h2>📌 News</h2>
           <div class="news-card">
             <ul class="news-list">
+              <li><span class="news-date">[Nov 2025]</span> Our paper "loT-Brain: Grounding LLMs for Semantic-Spatial Sensor Scheduling" has been accepted by ACM MobiCom 2026! Congratulations to Zhaomeng and Junyang!</li>
               <li><span class="news-date">[Nov 2025]</span> The agenda for the ANAI workshop is out! Check out our keynote, panels, industry experience sharing, and banquet (<a href="https://anai.cuhkaiot.com/2025/program.html#main" target="_blank" rel="noopener noreferrer">link</a>)! Looking forward to seeing you all in Hong Kong on November 8th.</li>
               <li><span class="news-date">[Oct 2025]</span> Our paper "TopFGL: A Topology-Aware and Distribution-Agnostic Federated Learning Framework Tackling Topological Heterogeneity on Graph Data" has been accepted by ICDE 2026! Congratulations to Junyang Wang!</li>
               <li><span class="news-date">[Sep 2025]</span> The ANAI Workshop @ MobiCom 2025 has released the <a href="https://anai.cuhkaiot.com/2025/program.html#main" target="_blank" rel="noopener noreferrer">accepted papers</a>! Congratulations to all authors!</li>
               <li><span class="news-date">[Sep 2025]</span> Our paper "COACH: Adaptive Robust Human-Robot Collaboration for Efficient Smart Manufacturing" has been accepted by ACM SenSys 2026! Congratulations to Hui Wang!</li>
-              <li><span class="news-date">[Aug 2025]</span> Our paper "STIP: Three-Party Privacy-Preserving and Lossless Inference for Large Transformers in Production" has been accepted by NDSS 2026!</li>
-              <!-- <li><span class="news-date">[Jun 2025]</span> Our paper "Myo-Trainer" has been accepted by MobiCom 2025!</li> -->
-              <!-- <li><span class="news-date">[May 2025]</span> Our paper "Argus: Multi-view egocentric human mesh reconstruction based on stripped-down wearable mmwave add-on" received the Best Paper Honorable Mention Award at SenSys 2025!</li> -->
+              <li class="news-item-hidden"><span class="news-date">[Aug 2025]</span> Our paper "STIP: Three-Party Privacy-Preserving and Lossless Inference for Large Transformers in Production" has been accepted by NDSS 2026!</li>
+              <li class="news-item-hidden"><span class="news-date">[Jun 2025]</span> Our paper "Myo-Trainer" has been accepted by MobiCom 2025!</li>
+              <li class="news-item-hidden"><span class="news-date">[May 2025]</span> Our paper "Argus: Multi-view egocentric human mesh reconstruction based on stripped-down wearable mmwave add-on" received the Best Paper Honorable Mention Award at SenSys 2025!</li>
             </ul>
+            <button id="toggle-news-btn" class="toggle-news-btn" onclick="toggleNews()">Show More</button>
           </div>
         </div>
 
@@ -112,6 +114,13 @@
       </h3>
       <div id="category-mobile" class="category-content">
       <div class="paper-card">
+
+        <p>
+          loT-Brain: Grounding LLMs for Semantic-Spatial Sensor Scheduling<br>
+          Zhaomeng Zhou, Lan Zhang, Junyang Wang, <u>Mu Yuan</u>, Junda Lin, Jinke Song<br>
+          <i>ACM MobiCom 2026</i><br>
+        </p>
+        <hr/>
 
         <p>
           Grape: Efficient Spatiotemporal Prediction Services with Stale Sensing Streams<br>
@@ -231,6 +240,9 @@
 
         <div id="talks" class="content-section">
           <p>
+          <strong style="color: #0066cc;">[国防科技大学 专题报告]</strong><br>
+          <strong>[2025.11.19]</strong> 合肥 - 端云协同的大模型安全推理协议研究<br>
+          <br>
           <strong style="color: #0066cc;">[ACM 中国图灵大会，ACM TURC 2025]</strong><br>
           <strong>[2025.10.11]</strong> 深圳 - <a href="https://www.acmturc.com/2025/cn/attach/new_star_forum/" target="_blank" rel="noopener noreferrer">端云协同：驱动大模型高效与安全服务的系统研究</a><br>
           <br>
@@ -384,6 +396,29 @@
             content.classList.add('expanded');
           }
         });
+      }
+
+      // News toggle functionality
+      function toggleNews() {
+        const hiddenItems = document.querySelectorAll('.news-item-hidden');
+        const toggleBtn = document.getElementById('toggle-news-btn');
+        
+        if (hiddenItems.length > 0) {
+          // Show all hidden items
+          hiddenItems.forEach(item => {
+            item.classList.remove('news-item-hidden');
+          });
+          toggleBtn.textContent = 'Show Less';
+        } else {
+          // Hide items beyond the first 5
+          const allItems = document.querySelectorAll('.news-list li');
+          allItems.forEach((item, index) => {
+            if (index >= 5) {
+              item.classList.add('news-item-hidden');
+            }
+          });
+          toggleBtn.textContent = 'Show More';
+        }
       }
     </script>
   </body>
