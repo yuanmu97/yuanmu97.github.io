@@ -185,15 +185,121 @@ section {
   z-index: 1;
 }
 
+/* Paper card paragraph styling */
+.paper-card p {
+  margin-bottom: 8px;
+  line-height: 1.6;
+  color: #595959;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.paper-card p:last-child {
+  margin-bottom: 0;
+}
+
+/* Title - make first element or first link bold */
+.paper-card p > strong:first-child,
+.paper-card p > a:first-child {
+  font-weight: bold;
+}
+
+/* Title links - make them bold (for links that are titles) */
+.paper-card p > a:first-child[href*="doi"],
+.paper-card p > a:first-child[href*="arxiv"],
+.paper-card p > a:first-child[href*="aclanthology"],
+.paper-card p > a:first-child[href*="ieeexplore"],
+.paper-card p > a:first-child[href*="ojs.aaai"],
+.paper-card p > a:first-child[href*="dl.acm"] {
+  font-weight: bold;
+}
+
+/* For titles that are not links, we need to handle them differently */
+/* First text node or first element should be bold if it's a title */
+
+/* Resource links (PDF, Code, etc.) - button style, small and subtle */
+/* These should NOT be bold, even if they're first child */
+/* Exception: dissertation title links should be normal bold links */
+#category-dissertation .paper-card p > a:first-child {
+  font-weight: bold !important;
+  display: inline;
+  padding: 0;
+  margin: 0;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  color: #39c;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+#category-dissertation .paper-card p > a:first-child:hover {
+  text-decoration: underline;
+  background-color: transparent;
+  border: none;
+  color: #069;
+}
+
+.paper-card a[href*=".pdf"],
+.paper-card a[href*="preprint"],
+.paper-card a[href*="github.com"],
+.paper-card a[href*="gitee.com"],
+.paper-card a[href*="slides"] {
+  font-weight: normal !important;
+  display: inline-block;
+  padding: 1px 6px;
+  margin: 0 2px;
+  background-color: #4a90e2;
+  border: 1px solid #4a90e2;
+  border-radius: 3px;
+  color: #fff;
+  text-decoration: none;
+  font-size: 12px;
+  transition: all 0.2s ease;
+  line-height: 1.4;
+}
+
+.paper-card a[href*=".pdf"]:hover,
+.paper-card a[href*="preprint"]:hover,
+.paper-card a[href*="github.com"]:hover,
+.paper-card a[href*="gitee.com"]:hover,
+.paper-card a[href*="slides"]:hover {
+  background-color: #357abd;
+  border-color: #357abd;
+  color: #fff;
+  text-decoration: none;
+}
+
+/* Override bold for resource links that might be first child */
+.paper-card p > a:first-child[href*=".pdf"],
+.paper-card p > a:first-child[href*="preprint"],
+.paper-card p > a:first-child[href*="github.com"],
+.paper-card p > a:first-child[href*="gitee.com"],
+.paper-card p > a:first-child[href*="slides"] {
+  font-weight: normal !important;
+}
+
+/* Regular links (not resource links) - keep normal weight */
 .paper-card a {
   position: relative;
   z-index: 2;
   display: inline-block;
   margin-right: 10px;
+  font-weight: normal;
 }
 
 .paper-card a:hover {
   text-decoration: underline;
+}
+
+/* Beautify link separators */
+.link-separator {
+  display: none; /* Hide separators since buttons have spacing */
+}
+
+/* Separator styling - keep existing | separators but make them subtle */
+.paper-card p {
+  font-size: 14px;
 }
 
 small {
@@ -459,20 +565,82 @@ footer {
   }
 }
 
+/* Services section styling */
+.service-item {
+  margin-bottom: 18px;
+  line-height: 1.6;
+}
+
+.service-item:last-child {
+  margin-bottom: 0;
+}
+
+.service-item strong {
+  color: #222;
+  font-weight: 500;
+}
+
+/* Awards section styling */
+.award-item {
+  margin-bottom: 18px;
+  line-height: 1.6;
+  color: #595959;
+  font-size: 14px;
+}
+
+.award-item:last-child {
+  margin-bottom: 0;
+}
+
+/* Style links in awards section as normal text links */
+#awards .award-item a {
+  font-weight: normal;
+  color: #39c;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+#awards .award-item a:hover {
+  color: #069;
+  text-decoration: underline;
+}
+
 /* Reviewer items alignment */
+.reviewer-list {
+  margin-top: 8px;
+  margin-left: 0;
+}
 
 .reviewer-item {
   display: flex;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
+  padding-left: 4px;
+}
+
+.reviewer-item:last-child {
+  margin-bottom: 0;
 }
 
 .reviewer-name {
   display: inline-block;
   min-width: 150px;
   text-align: left;
+  color: #444;
 }
 
 .reviewer-years {
   display: inline-block;
   text-align: left;
+  color: #666;
+}
+
+/* Talk title styling */
+#talks .talk-title {
+  font-weight: bold;
+  color: #003d7a;
+}
+
+#talks .talk-title:hover {
+  color: #0056b3;
+  text-decoration: underline;
 }
