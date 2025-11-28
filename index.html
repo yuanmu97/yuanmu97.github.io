@@ -38,9 +38,10 @@
         </nav>
     
         <div id="about" class="content-section active">
-          <p> I am fortunate to work with Prof. <a href="https://scholar.google.com.hk/citations?user=kI5JKs8AAAAJ&hl=en" target="_blank" rel="noopener noreferrer"> Guoliang Xing</a> at CUHK. 
-            Before joining CUHK, I was advised by Prof. <a href="https://scholar.google.com/citations?user=JURtNb0AAAAJ&hl=en" target="_blank" rel="noopener noreferrer"> Xiang-Yang Li </a> and Prof. <a href="https://scholar.google.com/citations?user=83QxmA8AAAAJ&hl=en" target="_blank" rel="noopener noreferrer"> Lan Zhang </a> at USTC. 
-            My research interest is designing theory-backed algorithms and building innovative systems for AI workloads. </p>
+          <p>Since 2024, I am fortunate to work with Prof. <a href="https://scholar.google.com.hk/citations?user=kI5JKs8AAAAJ&hl=en" target="_blank" rel="noopener noreferrer"> Guoliang Xing</a> at CUHK.      
+          <br>I received my PhD degree from USTC in 2024, advised by Prof. <a href="https://scholar.google.com/citations?user=JURtNb0AAAAJ&hl=en" target="_blank" rel="noopener noreferrer"> Xiang-Yang Li </a> and Prof. <a href="https://scholar.google.com/citations?user=83QxmA8AAAAJ&hl=en" target="_blank" rel="noopener noreferrer"> Lan Zhang</a>. 
+          <br>I received my Bachelor's degree from USTC in 2019.
+          <br>My research interest is designing theory-backed algorithms and building innovative systems for AI workloads. </p>
 
           <h2>📌 News</h2>
           <div class="news-card">
@@ -354,11 +355,7 @@
             // Update URL
             history.pushState(null, '', '#' + targetId);
             
-            // Scroll to top of section area
-            const sectionNav = document.getElementById('sectionNav');
-            if (sectionNav) {
-              sectionNav.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
+            // Don't scroll - just switch content to keep navigation bar fixed at top
           });
         });
 

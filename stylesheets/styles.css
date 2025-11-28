@@ -173,6 +173,8 @@ section {
   width:65%;
   float:right;
   padding-bottom:50px;
+  position: relative;
+  min-height: 100vh;
 }
 
 .paper-card {
@@ -451,9 +453,8 @@ footer {
 /* Section Navigation Bar */
 .section-nav {
   position: sticky;
-  top: 20px;
-  background-color: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
+  top: 0;
+  background-color: #fff;
   border-bottom: 2px solid #f0f0f0;
   padding: 15px 20px;
   margin-bottom: 30px;
@@ -463,6 +464,7 @@ footer {
   gap: 8px;
   justify-content: center;
   align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .nav-link {
@@ -637,10 +639,4 @@ footer {
 /* Talk title styling */
 #talks .talk-title {
   font-weight: bold;
-  color: #003d7a;
-}
-
-#talks .talk-title:hover {
-  color: #0056b3;
-  text-decoration: underline;
 }
