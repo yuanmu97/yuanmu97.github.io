@@ -458,3 +458,21 @@ footer {
     transform: translateY(0);
   }
 }
+
+/* Reviewer items alignment */
+
+.reviewer-item {
+  display: flex;
+  margin-bottom: 4px;
+}
+
+.reviewer-name {
+  display: inline-block;
+  min-width: 150px;
+  text-align: left;
+}
+
+.reviewer-years {
+  display: inline-block;
+  text-align: left;
+}
