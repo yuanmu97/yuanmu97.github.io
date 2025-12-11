@@ -246,6 +246,7 @@ section {
 .paper-card a[href*="preprint"],
 .paper-card a[href*="github.com"],
 .paper-card a[href*="gitee.com"],
+.paper-card a[href*="huggingface.co"],
 .paper-card a[href*="slides"] {
   font-weight: normal !important;
   display: inline-block;
@@ -265,6 +266,7 @@ section {
 .paper-card a[href*="preprint"]:hover,
 .paper-card a[href*="github.com"]:hover,
 .paper-card a[href*="gitee.com"]:hover,
+.paper-card a[href*="huggingface.co"]:hover,
 .paper-card a[href*="slides"]:hover {
   background-color: #357abd;
   border-color: #357abd;
@@ -277,6 +279,7 @@ section {
 .paper-card p > a:first-child[href*="preprint"],
 .paper-card p > a:first-child[href*="github.com"],
 .paper-card p > a:first-child[href*="gitee.com"],
+.paper-card p > a:first-child[href*="huggingface.co"],
 .paper-card p > a:first-child[href*="slides"] {
   font-weight: normal !important;
 }
@@ -639,4 +642,22 @@ footer {
 /* Talk title styling */
 #talks .talk-title {
   font-weight: bold;
+}
+
+.talk-divider {
+  border: 0;
+  border-top: 1px solid #e5e5e5;
+  margin: 14px 0;
+}
+
+/* Award badge styling */
+.award-badge {
+  display: inline-block;
+  /* background-color: #ffd700; */
+  color: #8b6914;
+  font-weight: 600;
+  /* padding: 2px 8px; */
+  /* border-radius: 4px; */
+  /* margin: 0 4px; */
+  /* box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); */
 }
