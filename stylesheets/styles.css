@@ -247,6 +247,7 @@ section {
 .paper-card a[href*="github.com"],
 .paper-card a[href*="gitee.com"],
 .paper-card a[href*="huggingface.co"],
+.paper-card a[href*="mp.weixin.qq.com"],
 .paper-card a[href*="slides"] {
   font-weight: normal !important;
   display: inline-block;
@@ -267,6 +268,7 @@ section {
 .paper-card a[href*="github.com"]:hover,
 .paper-card a[href*="gitee.com"]:hover,
 .paper-card a[href*="huggingface.co"]:hover,
+.paper-card a[href*="mp.weixin.qq.com"]:hover,
 .paper-card a[href*="slides"]:hover {
   background-color: #357abd;
   border-color: #357abd;
@@ -280,6 +282,7 @@ section {
 .paper-card p > a:first-child[href*="github.com"],
 .paper-card p > a:first-child[href*="gitee.com"],
 .paper-card p > a:first-child[href*="huggingface.co"],
+.paper-card p > a:first-child[href*="mp.weixin.qq.com"],
 .paper-card p > a:first-child[href*="slides"] {
   font-weight: normal !important;
 }
