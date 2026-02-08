@@ -1,0 +1,11 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /posts/{postId} {
+      // 所有人可读已发布的文章；登录用户可读全部（便于管理后台）
+      allow read: if resource.data.published == true || request.auth != null;
+      // 仅登录用户可写（管理员）
+      allow create, update, delete: if request.auth != null;
+    }
+  }
+}

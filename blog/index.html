@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Blog - Mu Yuan</title>
+    <link rel="stylesheet" href="../stylesheets/styles.css">
+    <link rel="stylesheet" href="../stylesheets/blog.css">
+    <link rel="icon" href="../imgs/favicon.png">
+  </head>
+  <body class="blog-page">
+    <div class="wrapper">
+      <header>
+        <h1><a href="../index.html">Mu Yuan (袁牧)</a></h1>
+        <p><a href="index.html">Blog</a></p>
+        <div id="authArea" class="blog-auth-area">
+          <span id="authLoggedOut"><button type="button" id="btnLogin" class="btn-login">登录</button></span>
+          <span id="authLoggedIn" class="hidden"><span id="userName" class="blog-username"></span> <a href="../admin/" class="blog-admin-link">管理后台</a> <button type="button" id="btnLogout" class="btn-logout">退出</button></span>
+        </div>
+      </header>
+      <!-- 登录弹窗 -->
+      <div id="loginModal" class="login-modal hidden">
+        <div class="login-modal-backdrop"></div>
+        <div class="login-modal-box">
+          <h3>管理员登录</h3>
+          <p id="loginError" class="login-error hidden"></p>
+          <form id="loginForm">
+            <div class="form-group">
+              <label for="loginEmail">邮箱</label>
+              <input type="email" id="loginEmail" required placeholder="your@email.com">
+            </div>
+            <div class="form-group">
+              <label for="loginPassword">密码</label>
+              <input type="password" id="loginPassword" required placeholder="密码">
+            </div>
+            <div class="login-modal-actions">
+              <button type="submit" class="btn btn-primary">登录</button>
+              <button type="button" id="btnCancelLogin" class="btn btn-secondary">取消</button>
+            </div>
+          </form>
+          <p class="login-hint"><a href="../admin/">管理后台</a>（写文章、编辑）</p>
+        </div>
+      </div>
+      <section>
+        <h2>博客</h2>
+        <ul class="post-list" id="postList">
+          <li id="loading">加载中…</li>
+        </ul>
+        <p id="noPosts" class="hidden" style="color:#777;">暂无文章。<a href="../admin/" id="noPostsAdminLink" class="hidden">去管理后台写文章</a></p>
+      </section>
+      <footer>
+        <p><small><a href="../index.html">← 返回首页</a></small></p>
+      </footer>
+    </div>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <script src="../javascripts/firebase-config.js"></script>
+    <script>
+      (function() {
+        if (typeof FIREBASE_CONFIG === 'undefined' || !FIREBASE_CONFIG.apiKey || FIREBASE_CONFIG.apiKey === 'YOUR_API_KEY') {
+          document.getElementById('postList').innerHTML = '<li style="color:#c0392b;">请先在 <code>javascripts/firebase-config.js</code> 中配置 Firebase。</li>';
+          document.getElementById('authArea').classList.add('hidden');
+          return;
+        }
+        firebase.initializeApp(FIREBASE_CONFIG);
+        var db = firebase.firestore();
+        var auth = firebase.auth();
+
+        var listEl = document.getElementById('postList');
+        var noPostsEl = document.getElementById('noPosts');
+
+        // 加载文章列表
+        function loadPosts() {
+          var currentUser = auth.currentUser;
+          var query = db.collection('posts').orderBy('createdAt', 'desc');
+          
+          // 未登录用户只能看已发布的文章
+          if (!currentUser) {
+            query = query.where('published', '==', true);
+          }
+          
+          query.get()
+            .then(function(snap) {
+              document.getElementById('loading').remove();
+              if (snap.empty) {
+                noPostsEl.classList.remove('hidden');
+                var adminLink = document.getElementById('noPostsAdminLink');
+                if (currentUser && adminLink) {
+                  adminLink.classList.remove('hidden');
+                } else if (adminLink) {
+                  adminLink.classList.add('hidden');
+                }
+                return;
+              }
+              snap.forEach(function(doc) {
+                var d = doc.data();
+                // 未登录用户跳过未发布的文章（双重保险）
+                if (!currentUser && d.published !== true) {
+                  return;
+                }
+                var createdAt = d.createdAt && d.createdAt.toDate ? d.createdAt.toDate() : new Date();
+                var dateStr = createdAt.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' });
+                var li = document.createElement('li');
+                li.className = 'post-item';
+                var statusBadge = currentUser && d.published !== true ? '<span style="font-size:11px;color:#999;margin-left:8px;">[草稿]</span>' : '';
+                li.innerHTML = '<a href="post.html?id=' + encodeURIComponent(doc.id) + '"><h3>' + escapeHtml(d.title || '无标题') + statusBadge + '</h3></a><p class="post-meta">' + dateStr + '</p>';
+                listEl.appendChild(li);
+              });
+            })
+            .catch(function(err) {
+              var msg = err.message || String(err);
+              var el = document.getElementById('loading');
+              el.id = '';
+              if (/permission|insufficient|权限/i.test(msg)) {
+                el.innerHTML = '加载失败：<strong>权限不足</strong>。请在 <a href="https://console.firebase.google.com/project/ymblog-45889/firestore/rules" target="_blank" rel="noopener">Firebase Console → Firestore → 规则</a> 中粘贴并发布以下规则：<pre style="text-align:left;font-size:11px;overflow:auto;background:#f5f5f5;padding:8px;border-radius:4px;margin-top:8px;">rules_version = \'2\';\nservice cloud.firestore {\n  match /databases/{database}/documents {\n    match /posts/{postId} {\n      allow read: if resource.data.published == true || request.auth != null;\n      allow create, update, delete: if request.auth != null;\n    }\n  }\n}</pre>';
+                el.style.whiteSpace = 'normal';
+              } else if (/index|索引/i.test(msg)) {
+                var urlMatch = msg.match(/https:\/\/[^\s\)\"]+/);
+                var indexLink = urlMatch ? urlMatch[0] : 'https://console.firebase.google.com/project/ymblog-45889/firestore/indexes';
+                el.innerHTML = '加载失败：需要创建 Firestore 复合索引（未登录时按「已发布+时间」查询需要）。<br><a href="' + indexLink + '" target="_blank" rel="noopener" class="blog-index-link">点此在 Firebase Console 创建索引</a>（选项目 ymblog-45889 → Firestore → 索引 → 创建索引：集合 <b>posts</b>，字段 <b>published</b> 升序、<b>createdAt</b> 降序）。';
+                el.style.whiteSpace = 'normal';
+              } else {
+                el.textContent = '加载失败：' + msg;
+              }
+            });
+        }
+
+        function escapeHtml(s) {
+          var div = document.createElement('div');
+          div.textContent = s;
+          return div.innerHTML;
+        }
+
+        // 登录 / 用户名显示
+        var authLoggedOut = document.getElementById('authLoggedOut');
+        var authLoggedIn = document.getElementById('authLoggedIn');
+        var userNameEl = document.getElementById('userName');
+        var loginModal = document.getElementById('loginModal');
+        var loginError = document.getElementById('loginError');
+        var loginForm = document.getElementById('loginForm');
+
+        // 监听登录状态变化，更新 UI 并重新加载文章
+        auth.onAuthStateChanged(function(user) {
+          // 更新登录/用户名显示
+          if (user) {
+            authLoggedOut.classList.add('hidden');
+            authLoggedIn.classList.remove('hidden');
+            userNameEl.textContent = user.displayName || user.email || '用户';
+          } else {
+            authLoggedOut.classList.remove('hidden');
+            authLoggedIn.classList.add('hidden');
+          }
+          
+          // 清空列表，重新加载文章
+          while (listEl.firstChild) listEl.removeChild(listEl.firstChild);
+          var loadingLi = document.createElement('li');
+          loadingLi.id = 'loading';
+          loadingLi.textContent = '加载中…';
+          listEl.appendChild(loadingLi);
+          noPostsEl.classList.add('hidden');
+          var adminLink = document.getElementById('noPostsAdminLink');
+          if (adminLink) adminLink.classList.add('hidden');
+          loadPosts();
+        });
+
+        document.getElementById('btnLogin').addEventListener('click', function() {
+          loginError.classList.add('hidden');
+          loginModal.classList.remove('hidden');
+        });
+
+        document.getElementById('btnCancelLogin').addEventListener('click', function() {
+          loginModal.classList.add('hidden');
+        });
+
+        loginModal.querySelector('.login-modal-backdrop').addEventListener('click', function() {
+          loginModal.classList.add('hidden');
+        });
+
+        document.getElementById('btnLogout').addEventListener('click', function() {
+          auth.signOut();
+        });
+
+        loginForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          loginError.classList.add('hidden');
+          var email = document.getElementById('loginEmail').value.trim();
+          var password = document.getElementById('loginPassword').value;
+          auth.signInWithEmailAndPassword(email, password).then(function() {
+            loginModal.classList.add('hidden');
+            loginForm.reset();
+          }).catch(function(err) {
+            loginError.textContent = err.message || '登录失败';
+            loginError.classList.remove('hidden');
+          });
+        });
+      })();
+    </script>
+  </body>
+</html>

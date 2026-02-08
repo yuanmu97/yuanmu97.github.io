@@ -1,0 +1,444 @@
+/* Blog 页面样式 - 与主页 styles.css 风格一致 */
+.blog-page .wrapper {
+  width: 90%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.blog-page header {
+  width: 100%;
+  float: none;
+  position: relative;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.blog-page header a {
+  color: #39c;
+}
+
+.blog-page .post-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.blog-page section {
+  width: 100%;
+  float: none;
+}
+
+.blog-page .post-item {
+  padding: 16px 20px;
+  margin-bottom: 12px;
+  background-color: #f9f9f9;
+  border-left: 4px solid #39c;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+}
+
+.blog-page .post-item:hover {
+  background-color: #f0f8fc;
+}
+
+.blog-page .post-item a {
+  text-decoration: none;
+  color: #222;
+}
+
+.blog-page .post-item a:hover {
+  color: #39c;
+}
+
+.blog-page .post-item h3 {
+  margin: 0 0 8px;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.blog-page .post-meta {
+  font-size: 13px;
+  color: #777;
+}
+
+.blog-page .post-content {
+  line-height: 1.7;
+  color: #444;
+}
+
+.blog-page .post-content h1,
+.blog-page .post-content h2,
+.blog-page .post-content h3 {
+  margin: 1em 0 0.5em;
+}
+
+.blog-page .post-content pre {
+  padding: 12px 16px;
+  background: #f8f8f8;
+  border-radius: 6px;
+  overflow-x: auto;
+}
+
+.blog-page .post-content code {
+  font-size: 13px;
+}
+
+.blog-page .back-link {
+  display: inline-block;
+  margin-bottom: 20px;
+  color: #39c;
+}
+
+.blog-page .back-link:hover {
+  color: #069;
+}
+
+/* 博客页：登录 / 用户名 */
+.blog-auth-area {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-top: 0;
+  font-size: 14px;
+}
+
+.blog-auth-area.hidden {
+  display: none !important;
+}
+
+.blog-username {
+  color: #333;
+  margin-right: 6px;
+}
+
+.blog-admin-link {
+  margin-right: 10px;
+  color: #39c;
+  font-size: 14px;
+}
+
+.blog-admin-link:hover {
+  color: #069;
+}
+
+#noPostsAdminLink {
+  margin-left: 8px;
+}
+
+.blog-index-link {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 8px 14px;
+  background: #39c;
+  color: #fff !important;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.blog-index-link:hover {
+  background: #069;
+  color: #fff !important;
+}
+
+.btn-login,
+.btn-logout {
+  padding: 6px 14px;
+  border-radius: 4px;
+  font-size: 13px;
+  cursor: pointer;
+  border: 1px solid #39c;
+  background: #fff;
+  color: #39c;
+}
+
+.btn-login:hover,
+.btn-logout:hover {
+  background: #39c;
+  color: #fff;
+}
+
+.btn-logout {
+  margin-left: 4px;
+  border-color: #999;
+  color: #666;
+}
+
+.btn-logout:hover {
+  background: #666;
+  border-color: #666;
+  color: #fff;
+}
+
+/* 登录弹窗 */
+.login-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.login-modal.hidden {
+  display: none !important;
+}
+
+.login-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+}
+
+.login-modal-box {
+  position: relative;
+  background: #fff;
+  border-radius: 8px;
+  padding: 24px;
+  max-width: 360px;
+  width: 100%;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.login-modal-box h3 {
+  margin: 0 0 16px;
+  font-size: 18px;
+}
+
+.login-modal-box .form-group {
+  margin-bottom: 14px;
+}
+
+.login-modal-box .form-group label {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 13px;
+  color: #555;
+}
+
+.login-modal-box input[type="email"],
+.login-modal-box input[type="password"] {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.login-error {
+  color: #c0392b;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
+.login-error.hidden {
+  display: none !important;
+}
+
+.login-modal-actions {
+  margin-top: 16px;
+  display: flex;
+  gap: 10px;
+}
+
+.login-modal-actions .btn {
+  padding: 8px 18px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.login-modal-actions .btn-primary {
+  background: #39c;
+  color: #fff;
+}
+
+.login-modal-actions .btn-primary:hover {
+  background: #069;
+}
+
+.login-modal-actions .btn-secondary {
+  background: #95a5a6;
+  color: #fff;
+}
+
+.login-modal-actions .btn-secondary:hover {
+  background: #7f8c8d;
+}
+
+.login-hint {
+  margin: 14px 0 0;
+  font-size: 12px;
+  color: #777;
+}
+
+.login-hint a {
+  color: #39c;
+}
+
+.blog-page .hidden {
+  display: none !important;
+}
+
+@media print, screen and (max-width: 720px) {
+  .blog-auth-area {
+    position: static;
+    margin-top: 12px;
+  }
+}
+
+/* Admin 页面 */
+.admin-page .wrapper {
+  max-width: 800px;
+}
+
+.admin-page .auth-box {
+  background: #f9f9f9;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  padding: 24px;
+  margin: 20px 0;
+}
+
+.admin-page .form-group {
+  margin-bottom: 16px;
+}
+
+.admin-page .form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+  color: #333;
+}
+
+.admin-page input[type="email"],
+.admin-page input[type="password"],
+.admin-page input[type="text"],
+.admin-page textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  font-family: inherit;
+}
+
+.admin-page textarea {
+  min-height: 280px;
+  resize: vertical;
+}
+
+.admin-page .btn {
+  display: inline-block;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.admin-page .btn-primary {
+  background: #39c;
+  color: #fff;
+}
+
+.admin-page .btn-primary:hover {
+  background: #069;
+}
+
+.admin-page .btn-danger {
+  background: #c0392b;
+  color: #fff;
+}
+
+.admin-page .btn-danger:hover {
+  background: #a0281a;
+}
+
+.admin-page .btn-secondary {
+  background: #95a5a6;
+  color: #fff;
+}
+
+.admin-page .btn-secondary:hover {
+  background: #7f8c8d;
+}
+
+.admin-page .admin-toolbar {
+  margin-bottom: 20px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.admin-page .post-list-admin {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.admin-page .post-list-admin li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  margin-bottom: 8px;
+  background: #f9f9f9;
+  border-radius: 6px;
+  border-left: 4px solid #39c;
+}
+
+.admin-page .post-list-admin .post-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.admin-page .editor-box {
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px 0;
+}
+
+.admin-page .editor-box h2 {
+  margin-top: 0;
+}
+
+.admin-page .publish-checkbox {
+  margin: 12px 0;
+}
+
+.admin-page .publish-checkbox label {
+  margin-left: 8px;
+  font-weight: normal;
+}
+
+.admin-page .msg {
+  padding: 10px 14px;
+  border-radius: 4px;
+  margin: 12px 0;
+}
+
+.admin-page .msg.error {
+  background: #fdecea;
+  color: #c0392b;
+  border: 1px solid #f5c6cb;
+}
+
+.admin-page .msg.success {
+  background: #e8f5e9;
+  color: #2e7d32;
+  border: 1px solid #c8e6c9;
+}
+
+.admin-page .hidden {
+  display: none !important;
+}

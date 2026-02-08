@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>博客管理 - Mu Yuan</title>
+    <link rel="stylesheet" href="../stylesheets/styles.css">
+    <link rel="stylesheet" href="../stylesheets/blog.css">
+    <link rel="icon" href="../imgs/favicon.png">
+  </head>
+  <body class="admin-page">
+    <div class="wrapper">
+      <header>
+        <h1><a href="../index.html">Mu Yuan</a> · 博客管理</h1>
+      </header>
+      <section>
+        <!-- 登录 -->
+        <div id="authBox" class="auth-box">
+          <h2>管理员登录</h2>
+          <p id="authMsg" class="msg hidden"></p>
+          <form id="loginForm" class="form-group">
+            <label for="loginEmail">邮箱</label>
+            <input type="email" id="loginEmail" required placeholder="your@email.com">
+            <label for="loginPassword">密码</label>
+            <input type="password" id="loginPassword" required placeholder="密码">
+            <div style="margin-top:12px;">
+              <button type="submit" class="btn btn-primary">登录</button>
+            </div>
+          </form>
+          <p style="font-size:13px;color:#777;">管理员账号需在 Firebase Console → Authentication 中创建（邮箱/密码）。</p>
+        </div>
+
+        <!-- 管理界面（登录后显示） -->
+        <div id="dashboard" class="hidden">
+          <div class="admin-toolbar">
+            <a href="../blog/index.html" class="btn btn-secondary">查看博客</a>
+            <button type="button" class="btn btn-primary" id="btnNewPost">写新文章</button>
+            <button type="button" class="btn btn-secondary" id="btnLogout">退出登录</button>
+          </div>
+          <p id="dashboardMsg" class="msg hidden"></p>
+
+          <div id="editorBox" class="editor-box hidden">
+            <h2 id="editorTitle">编辑文章</h2>
+            <form id="postForm">
+              <input type="hidden" id="postId" value="">
+              <div class="form-group">
+                <label for="postTitle">标题</label>
+                <input type="text" id="postTitle" required placeholder="文章标题">
+              </div>
+              <div class="form-group">
+                <label for="postContent">正文（支持 Markdown）</label>
+                <textarea id="postContent" placeholder="在此输入 Markdown 内容…"></textarea>
+              </div>
+              <div class="publish-checkbox">
+                <input type="checkbox" id="postPublished" checked>
+                <label for="postPublished">公开发布</label>
+              </div>
+              <div>
+                <button type="submit" class="btn btn-primary">保存</button>
+                <button type="button" class="btn btn-secondary" id="btnCancelEdit">取消</button>
+              </div>
+            </form>
+          </div>
+
+          <h3>已发布 / 草稿</h3>
+          <ul class="post-list-admin" id="adminPostList">
+            <li id="adminLoading">加载中…</li>
+          </ul>
+          <p id="adminNoPosts" class="hidden" style="color:#777;">暂无文章，点击「写新文章」创建。</p>
+        </div>
+      </section>
+      <footer>
+        <p><small><a href="../index.html">← 返回首页</a> · <a href="../blog/index.html">博客</a></small></p>
+      </footer>
+    </div>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <script src="../javascripts/firebase-config.js"></script>
+    <script>
+      (function() {
+        if (typeof FIREBASE_CONFIG === 'undefined' || !FIREBASE_CONFIG.apiKey || FIREBASE_CONFIG.apiKey === 'YOUR_API_KEY') {
+          document.getElementById('authBox').innerHTML = '<p class="msg error">请先在 <code>javascripts/firebase-config.js</code> 中配置 Firebase。</p>';
+          return;
+        }
+        firebase.initializeApp(FIREBASE_CONFIG);
+        var auth = firebase.auth();
+        var db = firebase.firestore();
+
+        var authBox = document.getElementById('authBox');
+        var dashboard = document.getElementById('dashboard');
+        var authMsg = document.getElementById('authMsg');
+        var loginForm = document.getElementById('loginForm');
+        var btnLogout = document.getElementById('btnLogout');
+        var btnNewPost = document.getElementById('btnNewPost');
+        var btnCancelEdit = document.getElementById('btnCancelEdit');
+        var editorBox = document.getElementById('editorBox');
+        var editorTitle = document.getElementById('editorTitle');
+        var postForm = document.getElementById('postForm');
+        var postId = document.getElementById('postId');
+        var postTitle = document.getElementById('postTitle');
+        var postContent = document.getElementById('postContent');
+        var postPublished = document.getElementById('postPublished');
+        var adminPostList = document.getElementById('adminPostList');
+        var adminNoPosts = document.getElementById('adminNoPosts');
+        var dashboardMsg = document.getElementById('dashboardMsg');
+
+        function showMsg(el, text, type) {
+          el.textContent = text;
+          el.className = 'msg ' + (type || 'success');
+          el.classList.remove('hidden');
+        }
+        function hideMsg(el) { el.classList.add('hidden'); }
+
+        auth.onAuthStateChanged(function(user) {
+          if (user) {
+            authBox.classList.add('hidden');
+            dashboard.classList.remove('hidden');
+            hideMsg(authMsg);
+            loadAdminPostList();
+          } else {
+            authBox.classList.remove('hidden');
+            dashboard.classList.add('hidden');
+            editorBox.classList.add('hidden');
+          }
+        });
+
+        loginForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          hideMsg(authMsg);
+          var email = document.getElementById('loginEmail').value.trim();
+          var password = document.getElementById('loginPassword').value;
+          auth.signInWithEmailAndPassword(email, password).then(function() {
+            showMsg(authMsg, '登录成功', 'success');
+          }).catch(function(err) {
+            showMsg(authMsg, '登录失败：' + (err.message || err), 'error');
+          });
+        });
+
+        btnLogout.addEventListener('click', function() {
+          auth.signOut();
+        });
+
+        function loadAdminPostList() {
+          var loading = document.getElementById('adminLoading');
+          if (loading) loading.textContent = '加载中…';
+          adminNoPosts.classList.add('hidden');
+          db.collection('posts').orderBy('createdAt', 'desc').get().then(function(snap) {
+            if (loading) loading.remove();
+            while (adminPostList.firstChild) adminPostList.removeChild(adminPostList.firstChild);
+            if (snap.empty) {
+              adminNoPosts.classList.remove('hidden');
+              return;
+            }
+            adminNoPosts.classList.add('hidden');
+            snap.forEach(function(doc) {
+              var d = doc.data();
+              var dateStr = d.createdAt && d.createdAt.toDate ? d.createdAt.toDate().toLocaleDateString('zh-CN') : '';
+              var status = d.published ? '已发布' : '草稿';
+              var li = document.createElement('li');
+              li.innerHTML = '<span><strong>' + escapeHtml(d.title || '无标题') + '</strong> · ' + dateStr + ' · ' + status + '</span>' +
+                '<span class="post-actions">' +
+                '<button type="button" class="btn btn-secondary btn-edit" data-id="' + doc.id + '">编辑</button>' +
+                '<button type="button" class="btn btn-danger btn-delete" data-id="' + doc.id + '">删除</button>' +
+                '</span>';
+              adminPostList.appendChild(li);
+            });
+            adminPostList.querySelectorAll('.btn-edit').forEach(function(btn) {
+              btn.addEventListener('click', function() { openEditor(btn.getAttribute('data-id')); });
+            });
+            adminPostList.querySelectorAll('.btn-delete').forEach(function(btn) {
+              btn.addEventListener('click', function() { deletePost(btn.getAttribute('data-id')); });
+            });
+          }).catch(function(err) {
+            if (loading) loading.textContent = '加载失败：' + (err.message || err);
+          });
+        }
+
+        function escapeHtml(s) {
+          var div = document.createElement('div');
+          div.textContent = s;
+          return div.innerHTML;
+        }
+
+        btnNewPost.addEventListener('click', function() {
+          postId.value = '';
+          postTitle.value = '';
+          postContent.value = '';
+          postPublished.checked = true;
+          editorTitle.textContent = '写新文章';
+          editorBox.classList.remove('hidden');
+        });
+
+        btnCancelEdit.addEventListener('click', function() {
+          editorBox.classList.add('hidden');
+        });
+
+        function openEditor(id) {
+          db.collection('posts').doc(id).get().then(function(doc) {
+            if (!doc.exists) return;
+            var d = doc.data();
+            postId.value = doc.id;
+            postTitle.value = d.title || '';
+            postContent.value = d.content || '';
+            postPublished.checked = d.published !== false;
+            editorTitle.textContent = '编辑文章';
+            editorBox.classList.remove('hidden');
+          });
+        }
+
+        function deletePost(id) {
+          if (!confirm('确定要删除这篇文章吗？')) return;
+          db.collection('posts').doc(id).delete().then(function() {
+            showMsg(dashboardMsg, '已删除', 'success');
+            loadAdminPostList();
+            if (postId.value === id) {
+              editorBox.classList.add('hidden');
+              postId.value = '';
+            }
+            setTimeout(function() { hideMsg(dashboardMsg); }, 2000);
+          }).catch(function(err) {
+            showMsg(dashboardMsg, '删除失败：' + (err.message || err), 'error');
+          });
+        }
+
+        postForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          hideMsg(dashboardMsg);
+          var id = postId.value.trim();
+          var data = {
+            title: postTitle.value.trim(),
+            content: postContent.value,
+            published: postPublished.checked,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+          };
+          if (!id) {
+            data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+            db.collection('posts').add(data).then(function(ref) {
+              showMsg(dashboardMsg, '已发布', 'success');
+              loadAdminPostList();
+              editorBox.classList.add('hidden');
+              setTimeout(function() { hideMsg(dashboardMsg); }, 2000);
+            }).catch(function(err) {
+              showMsg(dashboardMsg, '保存失败：' + (err.message || err), 'error');
+            });
+          } else {
+            db.collection('posts').doc(id).update(data).then(function() {
+              showMsg(dashboardMsg, '已更新', 'success');
+              loadAdminPostList();
+              setTimeout(function() { hideMsg(dashboardMsg); }, 2000);
+            }).catch(function(err) {
+              showMsg(dashboardMsg, '更新失败：' + (err.message || err), 'error');
+            });
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>
