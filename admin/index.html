@@ -41,25 +41,31 @@
 
           <div id="editorBox" class="editor-box hidden">
             <h2 id="editorTitle">编辑文章</h2>
-            <form id="postForm">
-              <input type="hidden" id="postId" value="">
-              <div class="form-group">
-                <label for="postTitle">标题</label>
-                <input type="text" id="postTitle" required placeholder="文章标题">
+            <div class="editor-split">
+              <form id="postForm" class="editor-form-pane">
+                <input type="hidden" id="postId" value="">
+                <div class="form-group">
+                  <label for="postTitle">标题</label>
+                  <input type="text" id="postTitle" required placeholder="文章标题">
+                </div>
+                <div class="form-group">
+                  <label for="postContent">正文（支持 Markdown）</label>
+                  <textarea id="postContent" placeholder="在此输入 Markdown 内容…"></textarea>
+                </div>
+                <div class="publish-checkbox">
+                  <input type="checkbox" id="postPublished" checked>
+                  <label for="postPublished">公开发布</label>
+                </div>
+                <div class="editor-actions">
+                  <button type="submit" class="btn btn-primary">保存</button>
+                  <button type="button" class="btn btn-secondary" id="btnCancelEdit">取消</button>
+                </div>
+              </form>
+              <div id="previewBox" class="preview-box">
+                <h3>预览</h3>
+                <div id="previewContent" class="post-content"></div>
               </div>
-              <div class="form-group">
-                <label for="postContent">正文（支持 Markdown）</label>
-                <textarea id="postContent" placeholder="在此输入 Markdown 内容…"></textarea>
-              </div>
-              <div class="publish-checkbox">
-                <input type="checkbox" id="postPublished" checked>
-                <label for="postPublished">公开发布</label>
-              </div>
-              <div>
-                <button type="submit" class="btn btn-primary">保存</button>
-                <button type="button" class="btn btn-secondary" id="btnCancelEdit">取消</button>
-              </div>
-            </form>
+            </div>
           </div>
 
           <h3>已发布 / 草稿</h3>
@@ -73,6 +79,10 @@
         <p><small><a href="../index.html">← 返回首页</a> · <a href="../blog/index.html">博客</a></small></p>
       </footer>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
@@ -100,6 +110,8 @@
         var postId = document.getElementById('postId');
         var postTitle = document.getElementById('postTitle');
         var postContent = document.getElementById('postContent');
+        var previewBox = document.getElementById('previewBox');
+        var previewContent = document.getElementById('previewContent');
         var postPublished = document.getElementById('postPublished');
         var adminPostList = document.getElementById('adminPostList');
         var adminNoPosts = document.getElementById('adminNoPosts');
@@ -189,10 +201,15 @@
           postPublished.checked = true;
           editorTitle.textContent = '写新文章';
           editorBox.classList.remove('hidden');
+          renderPreview();
         });
 
         btnCancelEdit.addEventListener('click', function() {
           editorBox.classList.add('hidden');
+        });
+
+        postContent.addEventListener('input', function() {
+          renderPreview();
         });
 
         function openEditor(id) {
@@ -202,9 +219,11 @@
             postId.value = doc.id;
             postTitle.value = d.title || '';
             postContent.value = d.content || '';
-            postPublished.checked = d.published !== false;
+            var isPublished = d.published === true || d.published === 'true' || typeof d.published === 'undefined';
+            postPublished.checked = isPublished;
             editorTitle.textContent = '编辑文章';
             editorBox.classList.remove('hidden');
+            renderPreview();
           });
         }
 
@@ -253,6 +272,24 @@
             });
           }
         });
+
+        function renderPreview() {
+          var content = postContent.value || '';
+          if (typeof marked !== 'undefined') {
+            previewContent.innerHTML = marked.parse(content, { gfm: true });
+          } else {
+            previewContent.textContent = content;
+          }
+          if (typeof renderMathInElement !== 'undefined') {
+            renderMathInElement(previewContent, {
+              delimiters: [
+                { left: '$$', right: '$$', display: true },
+                { left: '$',  right: '$',  display: false }
+              ],
+              throwOnError: false
+            });
+          }
+        }
       })();
     </script>
   </body>

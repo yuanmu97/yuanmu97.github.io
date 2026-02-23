@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="../stylesheets/blog.css">
     <link rel="icon" href="../imgs/favicon.png">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
   </head>
   <body class="blog-page">
     <div class="wrapper">
@@ -66,7 +69,16 @@
           } else {
             content = '<pre>' + escapeHtml(content) + '</pre>';
           }
-          articleEl.innerHTML = '<h2>' + escapeHtml(d.title || '无标题') + '</h2><p class="post-meta">' + dateStr + '</p><div class="post-content">' + content + '</div>';
+          articleEl.innerHTML = '<h2>' + escapeHtml(d.title || '无标题') + '</h2><p class="post-meta">' + dateStr + '</p><div class="post-content" id="postContentEl">' + content + '</div>';
+          if (typeof renderMathInElement !== 'undefined') {
+            renderMathInElement(document.getElementById('postContentEl'), {
+              delimiters: [
+                { left: '$$', right: '$$', display: true },
+                { left: '$',  right: '$',  display: false }
+              ],
+              throwOnError: false
+            });
+          }
         }).catch(function() {
           loadingEl.classList.add('hidden');
           notFoundEl.classList.remove('hidden');
