@@ -273,18 +273,31 @@
           }
         });
 
+        function parseMathMarkdown(content) {
+          var blocks = [];
+          function protect(m) { blocks.push(m); return '\x02MATH' + (blocks.length - 1) + '\x03'; }
+          content = content.replace(/\$\$([\s\S]*?)\$\$/g, protect);
+          content = content.replace(/\\\[([\s\S]*?)\\\]/g, protect);
+          content = content.replace(/\\\([\s\S]*?\\\)/g, protect);
+          content = content.replace(/\$[^\$\n]+?\$/g, protect);
+          var html = marked.parse(content, { gfm: true });
+          return html.replace(/\x02MATH(\d+)\x03/g, function(_, i) { return blocks[+i]; });
+        }
+
         function renderPreview() {
           var content = postContent.value || '';
           if (typeof marked !== 'undefined') {
-            previewContent.innerHTML = marked.parse(content, { gfm: true });
+            previewContent.innerHTML = parseMathMarkdown(content);
           } else {
             previewContent.textContent = content;
           }
           if (typeof renderMathInElement !== 'undefined') {
             renderMathInElement(previewContent, {
               delimiters: [
-                { left: '$$', right: '$$', display: true },
-                { left: '$',  right: '$',  display: false }
+                { left: '$$',  right: '$$',  display: true  },
+                { left: '\\[', right: '\\]', display: true  },
+                { left: '$',   right: '$',   display: false },
+                { left: '\\(', right: '\\)', display: false }
               ],
               throwOnError: false
             });

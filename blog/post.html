@@ -63,18 +63,29 @@
           document.title = (d.title || '无标题') + ' - Mu Yuan Blog';
           var createdAt = d.createdAt && d.createdAt.toDate ? d.createdAt.toDate() : new Date();
           var dateStr = createdAt.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' });
-          var content = d.content || '';
+          var rawContent = d.content || '';
+          var content;
           if (typeof marked !== 'undefined') {
-            content = marked.parse(content, { gfm: true });
+            var mathBlocks = [];
+            function protect(m) { mathBlocks.push(m); return '\x02MATH' + (mathBlocks.length - 1) + '\x03'; }
+            var protected_ = rawContent
+              .replace(/\$\$([\s\S]*?)\$\$/g, protect)
+              .replace(/\\\[([\s\S]*?)\\\]/g, protect)
+              .replace(/\\\([\s\S]*?\\\)/g, protect)
+              .replace(/\$[^\$\n]+?\$/g, protect);
+            content = marked.parse(protected_, { gfm: true })
+              .replace(/\x02MATH(\d+)\x03/g, function(_, i) { return mathBlocks[+i]; });
           } else {
-            content = '<pre>' + escapeHtml(content) + '</pre>';
+            content = '<pre>' + escapeHtml(rawContent) + '</pre>';
           }
           articleEl.innerHTML = '<h2>' + escapeHtml(d.title || '无标题') + '</h2><p class="post-meta">' + dateStr + '</p><div class="post-content" id="postContentEl">' + content + '</div>';
           if (typeof renderMathInElement !== 'undefined') {
             renderMathInElement(document.getElementById('postContentEl'), {
               delimiters: [
-                { left: '$$', right: '$$', display: true },
-                { left: '$',  right: '$',  display: false }
+                { left: '$$',  right: '$$',  display: true  },
+                { left: '\\[', right: '\\]', display: true  },
+                { left: '$',   right: '$',   display: false },
+                { left: '\\(', right: '\\)', display: false }
               ],
               throwOnError: false
             });

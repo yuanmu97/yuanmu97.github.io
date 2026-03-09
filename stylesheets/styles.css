@@ -202,11 +202,12 @@ section {
 
 /* Title - make first element or first link bold */
 .paper-card p > strong:first-child,
+.paper-card p > strong:first-child a,
 .paper-card p > a:first-child {
   font-weight: bold;
 }
 
-/* Title links - make them bold (for links that are titles) */
+/* Title links (when first child is <a>) - keep bold */
 .paper-card p > a:first-child[href*="doi"],
 .paper-card p > a:first-child[href*="arxiv"],
 .paper-card p > a:first-child[href*="aclanthology"],
