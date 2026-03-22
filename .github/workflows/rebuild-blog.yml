@@ -1,0 +1,34 @@
+# 仅当文章源或构建脚本变更时运行；生成物提交不会匹配 paths，避免循环触发。
+name: Rebuild blog
+
+on:
+  push:
+    branches:
+      - master
+      - main
+    paths:
+      - "blog/posts/**"
+      - "scripts/build-blog.mjs"
+      - "package.json"
+      - "package-lock.json"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - run: npm ci
+      - run: npm run build
+
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: rebuild static blog"

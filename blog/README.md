@@ -1,54 +1,47 @@
-# 博客使用说明
+# 博客（静态 Markdown）
 
-本博客基于 **Firebase**（认证 + Firestore），在 GitHub Pages 静态托管下实现管理员登录、创建与编辑文章。
+文章源文件在 **`blog/posts/`**，为 Markdown，顶部 YAML 头信息示例：
 
-## 一、Firebase 配置
-
-1. 打开 [Firebase Console](https://console.firebase.google.com/)，创建项目（或使用现有项目）。
-2. 在项目中启用：
-   - **Authentication** → 登录方式 → 启用「电子邮件/密码」。
-   - **Firestore Database** → 创建数据库（可按测试模式先启动，随后改为安全规则）。
-3. 在 **项目设置** → **常规** → 「你的应用」中添加 Web 应用，复制 `firebaseConfig`。
-4. 打开站点根目录下的 `javascripts/firebase-config.js`，将 `YOUR_API_KEY`、`YOUR_PROJECT_ID` 等替换为你的配置。
-
-## 二、Firestore 安全规则
-
-在 Firestore → **规则** 中设置为（可按需限制为仅你的邮箱可写）：
-
-```
-rules_version = '2';
-service cloud.firestore {
-  match /databases/{database}/documents {
-    match /posts/{postId} {
-      allow read: if resource.data.published == true || request.auth != null;
-      allow create, update, delete: if request.auth != null;
-    }
-  }
-}
+```yaml
+---
+id: "yourStableId"
+title: "文章标题"
+date: "2026-03-22T12:00:00.000Z"
+published: true
+---
 ```
 
-## 三、Firestore 索引（未登录访问博客列表时需要）
+- **`id`**：建议与文件名一致（`{id}.md`），用于生成 `blog/post/{id}.html` 与旧链接 `post.html?id={id}` 的跳转。
+- **`draft: true`**：不参与列表与生成（不写 `post/*.html`），仅本地保留草稿时可使用。
+- 正文支持 GitHub 风格 Markdown；数学公式规则与原先线上一致（`$$`、`$`、`\(` `\)`、`\[ \]`）。
 
-未登录时博客列表按「已发布 + 创建时间」查询，需要建**复合索引**：
+## 目录说明（避免混淆）
 
-- 集合 ID：`posts`
-- 字段：`published`（升序）、`createdAt`（降序）
-
-**方式一**：未登录访问博客页若报错「需要创建 Firestore 索引」，点击页面上的 **「点此在 Firebase Console 创建索引」**，按提示创建即可。  
-**方式二**：项目根目录有 `firestore.indexes.json`，若已安装 Firebase CLI，可执行：`firebase deploy --only firestore:indexes`
-
-## 四、管理员账号
-
-1. Firebase Console → **Authentication** → **用户** → **添加用户**。
-2. 输入用于登录的邮箱和密码并保存。
-3. 访问 **你的站点/admin/**，用该邮箱和密码登录即可管理博客。
-
-## 五、页面说明
-
-| 页面 | 说明 |
+| 路径 | 作用 |
 |------|------|
-| `/blog/` | 博客列表（仅显示已发布文章） |
-| `/blog/post.html?id=xxx` | 单篇文章（支持 Markdown 渲染） |
-| `/admin/` | 管理员登录、创建/编辑/删除文章 |
+| **`blog/posts/`** | **唯一信源**：每篇文章一个 `{id}.md`，你编辑的是这里。 |
+| **`blog/post/`** | **构建产物**：`npm run build` 生成的 `{id}.html`，勿手改。 |
+| `blog/posts/_export-manifest.json` | 可选：仅在你运行 `npm run export:firestore` 时写入，记录从 Firestore 拉取的时间与列表。 |
 
-正文支持 **Markdown**，保存后在前台自动渲染。
+## 发布流程
+
+**方式一（推荐）**：只改 `blog/posts/*.md` 后 `git commit` 并 `git push`。仓库已配置 GitHub Actions（`.github/workflows/rebuild-blog.yml`），会在云端执行 `npm run build` 并把 `blog/index.html`、`blog/post/`、`stylesheets/katex/` 一并提交。
+
+**方式二**：在本地生成后再推送：
+
+```bash
+npm install
+npm run build
+git add blog/ stylesheets/katex/
+git commit -m "blog: update posts"
+git push
+```
+
+`npm run build` 会：
+
+1. 将 KaTeX 样式与字体同步到 `stylesheets/katex/`（便于大陆访问、不依赖外网 CDN）。
+2. 根据 `blog/posts/*.md` 生成 `blog/index.html` 与 `blog/post/*.html`。
+
+## 从 Firestore 再拉取正文（可选）
+
+若仍使用 Firebase 存了文章，可执行 `npm run export:firestore`，会把已发布文档写成 `blog/posts/{id}.md`（覆盖同名文件），并生成 `blog/posts/_export-manifest.json`。然后务必再执行 `npm run build` 并提交。

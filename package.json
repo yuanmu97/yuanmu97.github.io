@@ -1,0 +1,15 @@
+{
+  "name": "yuanmu97-github-io",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build-blog.mjs",
+    "export:firestore": "node scripts/export-firestore-posts.mjs"
+  },
+  "dependencies": {
+    "firebase": "^11.6.0",
+    "gray-matter": "^4.0.3",
+    "katex": "^0.16.11",
+    "marked": "^15.0.0"
+  }
+}

@@ -3,104 +3,22 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>Blog - Mu Yuan</title>
-    <link rel="stylesheet" href="../stylesheets/styles.css">
-    <link rel="stylesheet" href="../stylesheets/blog.css">
+    <title>Redirect…</title>
     <link rel="icon" href="../imgs/favicon.png">
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
-  </head>
-  <body class="blog-page">
-    <div class="wrapper">
-      <header>
-        <h1><a href="../index.html">Mu Yuan (袁牧)</a></h1>
-        <p><a href="index.html">Blog</a></p>
-      </header>
-      <section>
-        <a href="index.html" class="back-link">← 返回博客列表</a>
-        <article id="postArticle">
-          <p id="loading">加载中…</p>
-          <p id="notFound" class="hidden" style="color:#c0392b;">文章不存在或未发布。</p>
-        </article>
-      </section>
-      <footer>
-        <p><small><a href="../index.html">← 返回首页</a></small></p>
-      </footer>
-    </div>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
-    <script src="../javascripts/firebase-config.js"></script>
     <script>
-      (function() {
-        if (typeof FIREBASE_CONFIG === 'undefined' || !FIREBASE_CONFIG.apiKey || FIREBASE_CONFIG.apiKey === 'YOUR_API_KEY') {
-          document.getElementById('loading').textContent = '请先配置 Firebase。';
-          return;
-        }
-        firebase.initializeApp(FIREBASE_CONFIG);
-        var db = firebase.firestore();
-
-        var params = new URLSearchParams(window.location.search);
-        var id = params.get('id');
-        var articleEl = document.getElementById('postArticle');
-        var loadingEl = document.getElementById('loading');
-        var notFoundEl = document.getElementById('notFound');
-
-        if (!id) {
-          loadingEl.classList.add('hidden');
-          notFoundEl.classList.remove('hidden');
-          return;
-        }
-
-        db.collection('posts').doc(id).get().then(function(doc) {
-          loadingEl.classList.add('hidden');
-          if (!doc.exists || !doc.data().published) {
-            notFoundEl.classList.remove('hidden');
-            return;
-          }
-          var d = doc.data();
-          document.title = (d.title || '无标题') + ' - Mu Yuan Blog';
-          var createdAt = d.createdAt && d.createdAt.toDate ? d.createdAt.toDate() : new Date();
-          var dateStr = createdAt.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' });
-          var rawContent = d.content || '';
-          var content;
-          if (typeof marked !== 'undefined') {
-            var mathBlocks = [];
-            function protect(m) { mathBlocks.push(m); return '\x02MATH' + (mathBlocks.length - 1) + '\x03'; }
-            var protected_ = rawContent
-              .replace(/\$\$([\s\S]*?)\$\$/g, protect)
-              .replace(/\\\[([\s\S]*?)\\\]/g, protect)
-              .replace(/\\\([\s\S]*?\\\)/g, protect)
-              .replace(/\$[^\$\n]+?\$/g, protect);
-            content = marked.parse(protected_, { gfm: true })
-              .replace(/\x02MATH(\d+)\x03/g, function(_, i) { return mathBlocks[+i]; });
-          } else {
-            content = '<pre>' + escapeHtml(rawContent) + '</pre>';
-          }
-          articleEl.innerHTML = '<h2>' + escapeHtml(d.title || '无标题') + '</h2><p class="post-meta">' + dateStr + '</p><div class="post-content" id="postContentEl">' + content + '</div>';
-          if (typeof renderMathInElement !== 'undefined') {
-            renderMathInElement(document.getElementById('postContentEl'), {
-              delimiters: [
-                { left: '$$',  right: '$$',  display: true  },
-                { left: '\\[', right: '\\]', display: true  },
-                { left: '$',   right: '$',   display: false },
-                { left: '\\(', right: '\\)', display: false }
-              ],
-              throwOnError: false
-            });
-          }
-        }).catch(function() {
-          loadingEl.classList.add('hidden');
-          notFoundEl.classList.remove('hidden');
-        });
-
-        function escapeHtml(s) {
-          var div = document.createElement('div');
-          div.textContent = s;
-          return div.innerHTML;
+      (function () {
+        var id = new URLSearchParams(location.search).get("id");
+        if (id) {
+          location.replace(
+            "post/" + encodeURIComponent(id) + ".html"
+          );
+        } else {
+          location.replace("index.html");
         }
       })();
     </script>
+  </head>
+  <body>
+    <p>若未自动跳转，请<a href="index.html">返回博客列表</a>。</p>
   </body>
 </html>
