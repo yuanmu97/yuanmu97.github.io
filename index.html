@@ -49,17 +49,18 @@
           <h2>📌 News</h2>
           <div class="news-card">
             <ul class="news-list">
+              <li><span class="news-date">[Mar 2026]</span> NVIDIA's open-source project <strong>nv-sflow</strong> is now live. We welcome everyone to try it on clusters, star the repo, and open issues! <a href="https://nvidia.github.io/nv-sflow/" target="_blank" rel="noopener noreferrer">Project site</a></li>
               <li><span class="news-date">[Jan 2026]</span> My doctoral dissertation received the Anhui Provincial Doctoral Dissertation Award!</li>
               <li><span class="news-date">[Dec 2025]</span> We released the <a href="https://huggingface.co/datasets/IoT-Brain/TopoSense-Bench" target="_blank" rel="noopener noreferrer">TopoSense-Bench dataset</a>, a large-scale benchmark for semantic-spatial sensor scheduling used in our IoT-Brain work [MobiCom '26]!</li>
               <li><span class="news-date">[Dec 2025]</span> Our paper "Venus" and "BeeKeeper" have been accepted by INFOCOM 2026! Congratulations to Shengyuan and Weizheng!</li>
               <li><span class="news-date">[Nov 2025]</span> Our paper "IoT-Brain: Grounding LLMs for Semantic-Spatial Sensor Scheduling" has been accepted by ACM MobiCom 2026! Congratulations to Zhaomeng and Junyang!</li>
               <li><span class="news-date">[Nov 2025]</span> The agenda for the ANAI workshop is out! Check out our keynote, panels, industry experience sharing, and banquet (<a href="https://anai.cuhkaiot.com/2025/program.html#main" target="_blank" rel="noopener noreferrer">link</a>)! Looking forward to seeing you all in Hong Kong on November 8th.</li>
               <li><span class="news-date">[Oct 2025]</span> Our paper "TopFGL: A Topology-Aware and Distribution-Agnostic Federated Learning Framework Tackling Topological Heterogeneity on Graph Data" has been accepted by ICDE 2026! Congratulations to Junyang Wang!</li>
-              <li class="news-item-hidden"><span class="news-date">[Sep 2025]</span> The ANAI Workshop @ MobiCom 2025 has released the <a href="https://anai.cuhkaiot.com/2025/program.html#main" target="_blank" rel="noopener noreferrer">accepted papers</a>! Congratulations to all authors!</li>
+              <li><span class="news-date">[Sep 2025]</span> The ANAI Workshop @ MobiCom 2025 has released the <a href="https://anai.cuhkaiot.com/2025/program.html#main" target="_blank" rel="noopener noreferrer">accepted papers</a>! Congratulations to all authors!</li>
               <!-- <li><span class="news-date">[Sep 2025]</span> Our paper "COACH: Adaptive Robust Human-Robot Collaboration for Efficient Smart Manufacturing" has been accepted by ACM SenSys 2026! Congratulations to Hui Wang!</li> -->
-              <li class="news-item-hidden"><span class="news-date">[Aug 2025]</span> Our paper "<a href="https://www.ndss-symposium.org/ndss-paper/stip-three-party-privacy-preserving-and-lossless-inference-for-large-transformers-in-production/" target="_blank" rel="noopener noreferrer">STIP: Three-Party Privacy-Preserving and Lossless Inference for Large Transformers in Production</a>" has been accepted by NDSS 2026!</li>
-              <li class="news-item-hidden"><span class="news-date">[Jun 2025]</span> Our paper "Myo-Trainer" has been accepted by MobiCom 2025!</li>
-              <li class="news-item-hidden"><span class="news-date">[May 2025]</span> Our paper "Argus: Multi-view egocentric human mesh reconstruction based on stripped-down wearable mmwave add-on" received the Best Paper Honorable Mention Award at SenSys 2025!</li>
+              <li><span class="news-date">[Aug 2025]</span> Our paper "<a href="https://www.ndss-symposium.org/ndss-paper/stip-three-party-privacy-preserving-and-lossless-inference-for-large-transformers-in-production/" target="_blank" rel="noopener noreferrer">STIP: Three-Party Privacy-Preserving and Lossless Inference for Large Transformers in Production</a>" has been accepted by NDSS 2026!</li>
+              <li><span class="news-date">[Jun 2025]</span> Our paper "Myo-Trainer" has been accepted by MobiCom 2025!</li>
+              <li><span class="news-date">[May 2025]</span> Our paper "Argus: Multi-view egocentric human mesh reconstruction based on stripped-down wearable mmwave add-on" received the Best Paper Honorable Mention Award at SenSys 2025!</li>
             </ul>
             <button id="toggle-news-btn" class="toggle-news-btn" onclick="toggleNews()">Show More</button>
           </div>
@@ -323,7 +324,8 @@
               </div>
               <div class="reviewer-item">
                 <span class="reviewer-name">Conferences</span>
-                <span class="reviewer-years">ACM Ubicomp / IEEE INFOCOM / AAAI / NeurIPS / ACL</span>
+                <span class="reviewer-years">ACM Ubicomp / IEEE INFOCOM / AAAI / ACL</span> 
+                <!-- 删除 neurips -->
               </div>
             </div>
           </div>
@@ -390,6 +392,7 @@
         // Initialize navigation functionality
         initNavigation();
         initCategoryToggle();
+        initNewsList();
       });
 
       // Navigation tab switching
@@ -466,26 +469,35 @@
         });
       }
 
-      // News toggle functionality
+      var NEWS_VISIBLE_COUNT = 5;
+
+      function initNewsList() {
+        var items = document.querySelectorAll('.news-list li');
+        var btn = document.getElementById('toggle-news-btn');
+        if (!btn || !items.length) return;
+        if (items.length <= NEWS_VISIBLE_COUNT) {
+          btn.hidden = true;
+          return;
+        }
+        btn.hidden = false;
+        for (var i = NEWS_VISIBLE_COUNT; i < items.length; i++) {
+          items[i].classList.add('news-item-hidden');
+        }
+        btn.textContent = 'Show More';
+      }
+
       function toggleNews() {
-        const hiddenItems = document.querySelectorAll('.news-item-hidden');
-        const toggleBtn = document.getElementById('toggle-news-btn');
-        
-        if (hiddenItems.length > 0) {
-          // Show all hidden items
-          hiddenItems.forEach(item => {
-            item.classList.remove('news-item-hidden');
-          });
-          toggleBtn.textContent = 'Show Less';
+        var items = document.querySelectorAll('.news-list li');
+        var extra = Array.prototype.slice.call(items, NEWS_VISIBLE_COUNT);
+        var btn = document.getElementById('toggle-news-btn');
+        if (!btn || extra.length === 0) return;
+        var anyHidden = extra.some(function (li) { return li.classList.contains('news-item-hidden'); });
+        if (anyHidden) {
+          extra.forEach(function (li) { li.classList.remove('news-item-hidden'); });
+          btn.textContent = 'Show Less';
         } else {
-          // Hide items beyond the first 5
-          const allItems = document.querySelectorAll('.news-list li');
-          allItems.forEach((item, index) => {
-            if (index >= 5) {
-              item.classList.add('news-item-hidden');
-            }
-          });
-          toggleBtn.textContent = 'Show More';
+          extra.forEach(function (li) { li.classList.add('news-item-hidden'); });
+          btn.textContent = 'Show More';
         }
       }
     </script>
