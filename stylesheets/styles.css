@@ -249,6 +249,7 @@ section {
 .paper-card a[href*="gitee.com"],
 .paper-card a[href*="huggingface.co"],
 .paper-card a[href*="mp.weixin.qq.com"],
+.paper-card a[href*="jiqizhixin.com"],
 .paper-card a[href*="slides"] {
   font-weight: normal !important;
   display: inline-block;
@@ -270,6 +271,7 @@ section {
 .paper-card a[href*="gitee.com"]:hover,
 .paper-card a[href*="huggingface.co"]:hover,
 .paper-card a[href*="mp.weixin.qq.com"]:hover,
+.paper-card a[href*="jiqizhixin.com"]:hover,
 .paper-card a[href*="slides"]:hover {
   background-color: #357abd;
   border-color: #357abd;
@@ -284,6 +286,7 @@ section {
 .paper-card p > a:first-child[href*="gitee.com"],
 .paper-card p > a:first-child[href*="huggingface.co"],
 .paper-card p > a:first-child[href*="mp.weixin.qq.com"],
+.paper-card p > a:first-child[href*="jiqizhixin.com"],
 .paper-card p > a:first-child[href*="slides"] {
   font-weight: normal !important;
 }
@@ -716,7 +719,11 @@ footer {
 }
 
 #opensource .oss-datasets {
-  max-width: 320px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+  gap: 14px;
+  max-width: 720px;
+  margin-bottom: 4px;
 }
 
 .hf-dataset-card {
@@ -733,6 +740,19 @@ footer {
 .hf-dataset-card:hover {
   box-shadow: 0 6px 22px rgba(167, 139, 250, 0.18);
   transform: translateY(-2px);
+}
+
+.hf-dataset-card--github {
+  background: linear-gradient(135deg, #24292f 0%, #1f6feb 50%, #388bfd 100%);
+  box-shadow: 0 3px 14px rgba(31, 111, 235, 0.14);
+}
+
+.hf-dataset-card--github:hover {
+  box-shadow: 0 6px 22px rgba(31, 111, 235, 0.2);
+}
+
+.hf-dataset-card--github .hf-dataset-card__eyebrow {
+  color: #57606a;
 }
 
 .hf-dataset-card__inner {
